@@ -2,18 +2,24 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
     /*ont-family: Arial, Helvetica, sans-serif; */
 }
 
 .container{
     height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
     background-color: #583b3b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Ym9va3N8ZW58MHx8MHx8fDA%3D&w=1000&q=80');
+    background-size: cover;
+    background-attachment: fixed;
+
 }
-
-
 /* -----------------------------------NAVBAR----------------------------------- */
 .nav{
     display: flex;
@@ -24,7 +30,6 @@
     background-color: #eb6a6a;
     list-style: none;
     position: fixed;
-    z-index: 1000;
 }
 .menu a{
     text-decoration: none;
@@ -37,7 +42,6 @@
     border-radius: 20px;
     padding: 5px;
     color: #000000;
-    box-shadow: #ccc 0px 0px 10px;
     transition: all 0.3s ease-in-out;
 }
 #a{
@@ -47,19 +51,7 @@
     color: #000000;
     transition: all 0.3s ease-in-out;
 }
-#c{
-    background-color: #ffffff;
-    border-radius: 20px;
-    padding: 5px;
-    color: #000000;
-    transition: all 0.3s ease-in-out;
-}
 
-#c:hover{
-    background-color: #000000;
-    color: #ffffff;
-    transform: scale(1.1);
-}
 #h:hover{
     background-color: #000000;
     color: #ffffff;
@@ -167,17 +159,17 @@ section.sidebar select {
 
 /* -----------------------------------MAIN----------------------------------- */
 .main{
-    margin: 20px;
+    margin: 10px;
     padding: 20px;
     background-color: #ccc;
     width: 800px;
     min-height: 600px;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     box-shadow: #ccc 0px 0px 10px;
     border-radius: 5px;
-
-
 }
 
 .card{
@@ -186,26 +178,13 @@ section.sidebar select {
     flex-wrap: wrap;
     justify-content: column;
     align-items: center;
-    justify-self: space-around;
-    margin: 20px;
-    padding: 20px;
+    margin: 10px;
+    padding: 10px;
     background-color: #fff;
     box-shadow: #ccc 0px 0px 10px;
     border-radius: 5px;
-
-
-}
-
-
-
-
-.book{
-    background-color: #040101;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    width: 200px;
-    padding: 10px;
-    text-align: center;
+    flex-basis: 200px;
+    flex-grow: 1px;
 }
 
 footer {
