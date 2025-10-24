@@ -1,0 +1,226 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*ont-family: Arial, Helvetica, sans-serif; */
+}
+
+.container{
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #583b3b;
+}
+
+
+/* -----------------------------------NAVBAR----------------------------------- */
+.nav{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background-color: #eb6a6a;
+    list-style: none;
+    position: fixed;
+    z-index: 1000;
+}
+.menu a{
+    text-decoration: none;
+    color: white;
+    margin: 15px;
+}
+
+#h{
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 5px;
+    color: #000000;
+    box-shadow: #ccc 0px 0px 10px;
+    transition: all 0.3s ease-in-out;
+}
+#a{
+    background-color: #fcfcfc;
+    border-radius: 20px;
+    padding: 5px;
+    color: #000000;
+    transition: all 0.3s ease-in-out;
+}
+#c{
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 5px;
+    color: #000000;
+    transition: all 0.3s ease-in-out;
+}
+
+#c:hover{
+    background-color: #000000;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+#h:hover{
+    background-color: #000000;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+#a:hover{
+    background-color: #000000;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.logo{
+    color: white;
+    font-family: 'Lucida Handwriting', cursive;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* -----------------------------------SEARCH BAR----------------------------------- */
+.search input[type="text"]{
+    padding: 5px;
+    border-radius: 5px 0px 0px 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 1000px;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+
+
+}
+.search button[type="submit"]{
+    border: none;
+    color: white;
+    background-color: #408940;
+    border-radius: 0px 5px 5px 0px;
+    cursor: pointer;
+
+}
+
+.search{
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    border-radius: 0px 20px 20px 0px;
+
+}
+
+/* -----------------------------------SIDEBAR----------------------------------- */
+
+.menu{
+    text-decoration: none;
+    color: rgb(187, 58, 58);
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+.category{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-self: space-around;
+    background-color: aquamarine;
+    height: 30px;
+
+}
+#cat{
+
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-self: space-around;
+}
+
+section.sidebar {
+    width: 220px;
+    height: 600px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin:20px;
+    border-radius: 5px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 500px;
+
+
+}
+
+section.sidebar select {
+    text-decoration: none;
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+/* -----------------------------------MAIN----------------------------------- */
+.main{
+    margin: 20px;
+    padding: 20px;
+    background-color: #ccc;
+    width: 800px;
+    min-height: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    box-shadow: #ccc 0px 0px 10px;
+    border-radius: 5px;
+
+
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: column;
+    align-items: center;
+    justify-self: space-around;
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: #ccc 0px 0px 10px;
+    border-radius: 5px;
+
+
+}
+
+
+
+
+.book{
+    background-color: #040101;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 200px;
+    padding: 10px;
+    text-align: center;
+}
+
+footer {
+    background-color: #eb6a6a;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin: 20px 0 0 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.content-area{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+}
