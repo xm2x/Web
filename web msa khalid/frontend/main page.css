@@ -1,199 +1,260 @@
-*{
+/* ==================================== GLOBAL RESET AND BASE STYLES ==================================== */
+* {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; 
     scroll-behavior: smooth;
-    /*ont-family: Arial, Helvetica, sans-serif; */
+    font-family: Arial, sans-serif; 
 }
 
-.container{
-    height: 300px;
-    width: 100%;
-    background-color: #583b3b;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Ym9va3N8ZW58MHx8MHx8fDA%3D&w=1000&q=80');
-    background-size: cover;
-    background-attachment: fixed;
-
-}
-/* -----------------------------------NAVBAR----------------------------------- */
-.nav{
+/* ==================================== NAVBAR (Header/Navigation) ==================================== */
+.nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
     width: 100%;
-    height: 50px;
+    height: 60px;
     background-color: #eb6a6a;
-    list-style: none;
     position: fixed;
-}
-.menu a{
-    text-decoration: none;
-    color: white;
-    margin: 15px;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
-#h{
-    background-color: #ffffff;
-    border-radius: 20px;
-    padding: 5px;
-    color: #000000;
-    transition: all 0.3s ease-in-out;
-}
-#a{
-    background-color: #fcfcfc;
-    border-radius: 20px;
-    padding: 5px;
-    color: #000000;
-    transition: all 0.3s ease-in-out;
-}
-
-#h:hover{
-    background-color: #000000;
-    color: #ffffff;
-    transform: scale(1.1);
-}
-#a:hover{
-    background-color: #000000;
-    color: #ffffff;
-    transform: scale(1.1);
-}
-
-.logo{
-    color: white;
-    font-family: 'Lucida Handwriting', cursive;
-    font-weight: bold;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* -----------------------------------SEARCH BAR----------------------------------- */
-.search input[type="text"]{
-    padding: 5px;
-    border-radius: 5px 0px 0px 5px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    width: 1000px;
+.content-area {
     display: flex;
-    justify-self: center;
-    align-self: center;
-
-
+    justify-content: center;
+    margin-top: 80px; 
 }
-.search button[type="submit"]{
+
+
+.logo h1 {
+    color: white;
+    font-family: 'Times New Roman', serif; 
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+
+.search {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding: 0;
+}
+
+.search input[type="text"] {
+    padding: 8px 15px;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    width: 300px;
+}
+
+.search button[type="submit"] {
+    padding: 8px 15px; 
     border: none;
     color: white;
     background-color: #408940;
-    border-radius: 0px 5px 5px 0px;
+    border-radius: 0 5px 5px 0;
     cursor: pointer;
-
+    white-space: nowrap; 
 }
 
-.search{
-    padding: 5px 10px;
+/* ==================================== USER DROPDOWN ==================================== */
+
+.user-menu-wrapper {
+    position: relative;
+    display: flex; 
+    align-items: center;
+    margin-right: 20px;
+}
+
+.dropdown-content {
+    display: none; 
+    position: absolute;
+    right: 0; 
+    top: 55px; 
+    background-color: #ffffff;
+    min-width: 140px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+    z-index: 100;
     border-radius: 5px;
-    border: none;
-    color: white;
-    font-size: 16px;
-    display: flex;
-    justify-self: center;
-    align-self: center;
-    border-radius: 0px 20px 20px 0px;
-
 }
 
-/* -----------------------------------SIDEBAR----------------------------------- */
-
-.menu{
+.dropdown-content a {
+    color: #333;
+    padding: 10px 15px;
     text-decoration: none;
-    color: rgb(187, 58, 58);
-    font-size: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-
+    display: block; 
 }
 
-.category{
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    justify-self: space-around;
-    background-color: aquamarine;
-    height: 30px;
-
-}
-#cat{
-
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    justify-self: space-around;
+.dropdown-content a:hover {
+    background-color: #e0e0e0;
 }
 
-section.sidebar {
-    width: 220px;
-    height: 600px;
-    background-color: #f4f4f4;
-    padding: 20px;
-    margin:20px;
-    border-radius: 5px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+.show {
+    display: block;
+}
+
+
+/* ==================================== HEADER BANNER (.container) ==================================== */
+.container {
+    height: 300px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 500px;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    
+    background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Ym9va3N8ZW58MHx8MHx8fDA%3D&w=1000&q=80');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+/* ==================================== NAVIGATION MENU BELOW BANNER (.menu) ==================================== */
+.menu {
+    display: flex;
+    justify-content: center; 
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+    margin: 0 15px;
+    font-size: 1.1rem;
+    padding: 5px 10px;
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+.menu .home,
+.menu .about,
+.menu .contcat {
+    background-color: #ffffff; 
+    color: #333;
+}
+
+.menu a:hover {
+    background-color: #000000;
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+/* ==================================== MAIN CONTENT LAYOUT (.content-area) ==================================== */
+.content-area {
+    display: flex;
+    align-items: flex-start; 
+    justify-content: center;
+    width: 90%;
+    margin: 80px auto 20px auto;
+    max-width: 1200px;
+}
 
 
+/* ==================================== SIDEBAR ==================================== */
+section.sidebar {
+    width: 250px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin-right: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 10;
+}
+
+section.sidebar h2 {
+    margin-bottom: 15px;
+    color: #333;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
 section.sidebar select {
-    text-decoration: none;
-    padding: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
     width: 100%;
-    text-align: center;
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-}
-
-/* -----------------------------------MAIN----------------------------------- */
-.main{
-    margin: 10px;
-    padding: 20px;
-    background-color: #ccc;
-    width: 800px;
-    min-height: 600px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    box-shadow: #ccc 0px 0px 10px;
     border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    cursor: pointer;
 }
 
-.card{
+
+/* ==================================== MAIN CONTENT (.main) ==================================== */
+.main {
+    padding: 20px;
+    background-color: #ffffff;
+    flex-grow: 1; 
+    min-height: 600px;
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+    border-radius: 8px;
+}
+
+/* Card Styling */
+.card {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: column;
     align-items: center;
-    margin: 10px;
-    padding: 10px;
+    
+    margin: 15px;
+    padding: 15px;
     background-color: #fff;
-    box-shadow: #ccc 0px 0px 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     border-radius: 5px;
-    flex-basis: 200px;
-    flex-grow: 1px;
+    
+    flex-basis: 220px; 
+    
+    text-align: center;
 }
 
+.card img {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+
+.card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #eb6a6a;
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* ==================================== FOOTER ==================================== */
 footer {
     background-color: #eb6a6a;
     color: white;
     text-align: center;
-    padding: 10px;
-    margin: 20px 0 0 0;
-    bottom: 0;
+    padding: 15px 10px;
+    margin-top: 40px;
     width: 100%;
 }
 
@@ -203,4 +264,3 @@ footer {
     align-items: center;
     margin-top: 80px;
 }
-    
