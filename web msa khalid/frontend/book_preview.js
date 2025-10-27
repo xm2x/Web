@@ -62,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Chapter switching
   document.getElementById('chapterList').addEventListener('click', (e) => {
     const a = e.target.closest('a[data-chapter]');
     if (!a) return;
