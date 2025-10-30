@@ -1,0 +1,80 @@
+/*
+    CSS for the Bookstore "About Us" Page (about.css)
+    Layout Pattern: Text Left, Text Right, Text Left, Text Right
+*/
+
+/* === 1. Base Setup & Global Styles === */
+body {
+    font-family: 'Georgia', serif; 
+    margin: 0;
+    padding: 0;
+    background-color: #fcfcfc;
+    color: #333;
+}
+
+header {
+    background-color: #5d4037; /* Warm, deep brown header */
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #8d6e63; /* Lighter brown for section headings */
+    font-size: 1.8em;
+    margin-top: 0;
+}
+
+/* === 2. Core Flexbox Layout (The Alternation Logic) === */
+
+/* This rule applies to all four <section> tags */
+.content-section {
+    display: flex;        /* Enables the side-by-side layout */
+    align-items: center;  /* Vertically centers items */
+    padding: 50px 8%;     /* Space around the content */
+    margin-bottom: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    gap: 40px;            /* Space between text and image columns */
+}
+
+/* This rule makes both the text and image containers take up equal space */
+.text-container, 
+.image-container {
+    flex: 1; /* Both take 50% width */
+}
+
+/* Styles for images */
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Alternation Rule 1: Text LEFT, Image RIGHT (Sections 1 & 3) --- */
+.text-left-image-right {
+    flex-direction: row; /* Default order: Text (left), Image (right) */
+    background-color: #ffffff; 
+}
+
+/* --- Alternation Rule 2: Text RIGHT, Image LEFT (Sections 2 & 4) --- */
+.text-right-image-left {
+    flex-direction: row-reverse; /* Flips the visual order: Image (left), Text (right) */
+    background-color: #f7f7f7;
+}
+
+
+/* === 3. Footer Styles (Centered) === */
+footer {
+    padding: 20px;
+    background-color: #333;
+    color: #ccc;
+    text-align: center; /* THIS CENTERS THE FOOTER TEXT */
+    font-size: 0.9em;
+}
+
+footer p {
+    margin: 0;
+}
