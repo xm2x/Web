@@ -100,19 +100,18 @@
 
 /* ==================================== HEADER BANNER (.container) ==================================== */
 .container {
-    height: 300px;
+    height: 500px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: rgb(255, 255, 255);
-    
     background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Ym9va3N8ZW58MHx8MHx8fDA%3D&w=1000&q=80');
+
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
-    
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
@@ -135,10 +134,8 @@
     padding: 5px 10px;
     border-radius: 20px;
     transition: all 0.3s ease-in-out;
-}
+} 
 
-.menu .home,
-.menu .about,
 .menu .contcat {
     background-color: #ffffff; 
     color: #333;
@@ -163,15 +160,16 @@
 
 /* ==================================== SIDEBAR ==================================== */
 section.sidebar {
-    width: 250px;
+    width: 450px;
+    height: 800px;
     background-color: #f4f4f4;
     padding: 20px;
     margin-right: 20px;
     border-radius: 8px;
+    margin-top:-180px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     z-index: 10;
 }
 
@@ -200,59 +198,56 @@ section.sidebar select {
     padding: 20px;
     background-color: #ffffff;
     flex-grow: 1; 
-    min-height: 600px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    min-height: auto;
+    margin-bottom: 100px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
     border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-self: auto;
+
+
 }
 
 .card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 80px;
+    height: 250px;
     margin: 15px;
     padding: 10px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     border-radius: 5px;
     flex-basis: 220px; 
     text-align: center;
-    transition: transform 0.3s ease-in-out;
-}
+    transition: transform 0.3s ease-out;
+} 
 
 .card img {
     
     background-image: url("web msa khalid/imge/Book Cover Designer - David Gardias.jpeg") ; 
     width: 150px;
-
-
+    height: 200px;
     
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
+
 
 .card h3 {
-    font-size: 1.2rem;
     margin-bottom: 5px;
-    color: #eb6a6a;
+    color: #000000;
 }
 
-.card p {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 5px;
-}
 .card:hover{
-
-    transform: scale(1.1);  
-    background-color: #eb6a6a75;
+    transform: scale(0.95);  
+    background-color:#eb6a6a59;
     color: #ffffff;
-
-
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 /* ==================================== FOOTER ==================================== */
+
 footer {
     background-color: #eb6a6a;
     color: white;
@@ -260,6 +255,8 @@ footer {
     padding: 15px 10px;
     margin-top: 40px;
     width: 100%;
+    bottom: 0;
+    left: 0;
 }
 
 .content-area{
@@ -268,3 +265,5 @@ footer {
     align-items: center;
     margin-top: 80px;
 }
+
+
