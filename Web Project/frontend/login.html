@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - BookHaven</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <div class="book-icon">📚</div>
+            <h1>BookHaven</h1>
+            <p>The world of books is in your hands now.</p>
+        </div>
+
+        <div class="right-panel">
+            <div class="form-container" id="form-container">
+               
+                <div id="login-form">
+                    <h2>Welcome Back</h2>
+
+                    <p>Login to your account</p>
+                    
+                   <form onsubmit="handleLogin(event)">
+                        <div class="form-group">
+
+                            <label for="login-email">Email Address</label>
+
+                            <input type="email" id="login-email" required placeholder="your@email.com">
+
+                        </div>
+                        
+                        <div class="form-group">
+
+                            <label for="login-password">Password</label>
+
+                            <input type="password" id="login-password" required placeholder="Enter your password">
+
+                        </div>
+                        
+                        <div class="forgot-password">
+
+                            <a href="#">Forgot Password?</a>
+
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Login</button>
+
+
+                  <form onsubmit="handleSignup(event)">
+                    
+                    <div class="form-footer">
+                        Don't have an account? 
+                        <a href="#" id="show-signup-link" onclick="toggleForms(event)">Sign Up</a>
+                    </div>
+                </div>
+
+           
+                <div id="signup-form">
+                    <h2>Create Account</h2>
+                    <p>Join our community</p>
+                    
+                    <form>
+                        <div class="form-group">
+                            <label for="signup-name">Full Name</label>
+                            <input type="text" id="signup-name" required placeholder="John Doe">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signup-email">the Email Address</label>
+                            <input type="email" id="signup-email" required placeholder="your@email.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" required placeholder="Create a password">
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Sign Up</button>
+                    </form>
+                    
+                    <div class="form-footer">
+                        Already have an account? 
+                        <a href="#" id="show-login-link" onclick="toggleForms(event)">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="inter.js"></script>
+</body>
+</html>
