@@ -69,7 +69,14 @@
     align-items: center;
     margin-right: 20px;
 }
-
+#info {
+    cursor: pointer;
+    border: 1px solid #ffffff;
+    transition: transform 0.3s ease-in-out;
+}
+#info:hover {
+    transform: scale(.90);
+}
 .dropdown-content {
     display: none; 
     position: absolute;
@@ -108,7 +115,6 @@
     justify-content: center;
     color: rgb(255, 255, 255);
     background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Ym9va3N8ZW58MHx8MHx8fDA%3D&w=1000&q=80');
-
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -118,6 +124,16 @@
 .container h1 {
     font-size: 2.5rem;
     margin-bottom: 20px;
+}
+.menu{
+    background-color: #f4f4f441;
+    padding: 10px;
+    margin: 100px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 1200px;
+    height: 900px;
+    align-items: center;
 }
 
 /* ==================================== NAVIGATION MENU BELOW BANNER (.menu) ==================================== */
@@ -160,8 +176,8 @@
 
 /* ==================================== SIDEBAR ==================================== */
 section.sidebar {
-    width: 450px;
-    height: 800px;
+    width: 650px;
+    height: auto;
     background-color: #f4f4f4;
     padding: 20px;
     margin-right: 20px;
@@ -206,6 +222,8 @@ section.sidebar select {
     flex-wrap: wrap;
     justify-content: center;
     justify-self: auto;
+    height: 800px ; 
+    overflow: auto;
 
 
 }
