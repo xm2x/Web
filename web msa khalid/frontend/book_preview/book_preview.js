@@ -16,12 +16,24 @@ document.addEventListener('DOMContentLoaded', () => {
     return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
   };
 
-  const pages = [
-    makeDataSvg('#f3b562', '#e86f6f', 'Sample Page 1'),
-    makeDataSvg('#2bb7b7', '#2b9bd7', 'Sample Page 2'),
-    makeDataSvg('#d69bd7', '#f3b1c1', 'Sample Page 3')
-  ];
+  // Create per-chapter page arrays using the embedded SVGs
+  const pagesByChapter = {
+    '1': [
+      makeDataSvg('#f3b562', '#e86f6f', 'Chapter 1 — Page 1'),
+      makeDataSvg('#f1c27a', '#e69797', 'Chapter 1 — Page 2'),
+      makeDataSvg('#f7d9b0', '#e8b1b1', 'Chapter 1 — Page 3')
+    ],
+    '2': [
+      makeDataSvg('#2bb7b7', '#2b9bd7', 'Chapter 2 — Page 1'),
+      makeDataSvg('#57c6c6', '#4aa0d0', 'Chapter 2 — Page 2')
+    ],
+    '3': [
+      makeDataSvg('#d69bd7', '#f3b1c1', 'Chapter 3 — Page 1')
+    ]
+  };
 
+  // Start with chapter 1 by default
+  let pages = pagesByChapter['1'].slice();
   let current = 0;
 
   const pageImage = document.getElementById('pageImage');
@@ -95,17 +107,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  document.getElementById('chapterList').addEventListener('click', (e) => {
+  const chapterList = document.getElementById('chapterList');
+  chapterList.addEventListener('click', (e) => {
     const a = e.target.closest('a[data-chapter]');
     if (!a) return;
     e.preventDefault();
 
     const ch = a.getAttribute('data-chapter');
-    pages.length = 0;
-
-    if (ch === '1') pages.push('images/page1.jpg', 'images/page2.jpg', 'images/page3.jpg');
-    else if (ch === '2') pages.push('images/ch2page1.jpg', 'images/ch2page2.jpg');
-    else pages.push('images/page1.jpg');
+    if (pagesByChapter[ch]) {
+      pages = pagesByChapter[ch].slice();
+    } else {
+      pages = pagesByChapter['1'].slice();
+    }
 
     pageCount.textContent = pages.length;
     jumpInput.max = pages.length;
@@ -115,6 +128,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadPage(0);
   });
+
+  // Activate chapter 1 visually and load its first page on open
+  (function openDefaultChapter() {
+    const first = chapterList.querySelector('a[data-chapter="1"]');
+    if (first) {
+      document.querySelectorAll('#chapterList a').forEach(x => x.classList.remove('active'));
+      first.classList.add('active');
+    }
+    pages = pagesByChapter['1'].slice();
+    pageCount.textContent = pages.length;
+    jumpInput.max = pages.length;
+    loadPage(0);
+  })();
 
   // Read query params and update preview cover/title if provided
   const params = new URLSearchParams(window.location.search);
