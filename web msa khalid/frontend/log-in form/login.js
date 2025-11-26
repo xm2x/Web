@@ -1,81 +1,31 @@
-function toggleForms(e) {
-    // Stop the link (<a> tag) from trying to navigate
-    e.preventDefault(); 
-    
-    const loginForm = document.getElementById('login-form');
-    const signupForm = document.getElementById('signup-form');
-    
-    if (loginForm.style.display === 'none') {
-        loginForm.style.display = 'block';
-        signupForm.style.display = 'none';
+function showSignup() {
+    document.getElementById('login-form').classList.add('hidden');
+    document.getElementById('signup-form').classList.remove('hidden');
+    document.getElementById('message').innerText = "";
+}
+
+function showLogin() {
+    document.getElementById('signup-form').classList.add('hidden');
+    document.getElementById('login-form').classList.remove('hidden');
+    document.getElementById('message').innerText = "";
+}
+
+function togglePassword(fieldId) {
+    const field = document.getElementById(fieldId);
+    if (field.type === "password") {
+        field.type = "text";
     } else {
-        loginForm.style.display = 'none';
-        signupForm.style.display = 'block';
+        field.type = "password";
     }
 }
 
-function handleLogin(e) {
-    // Stop the form from reloading the page on submit
-    e.preventDefault(); 
-    
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    
-    alert(`Login attempt with:\nEmail: ${email}\nPassword: ${password}`);
-    console.log('Login:', { email, password });
-    
-    // Redirect to the main page
-    window.location.href = "../main page/main page.html";
+function login() {
+    document.getElementById('message').innerText = "Logging you in...";
+    document.getElementById('message').style.color = "green";
 }
 
-function handleSignup(e) {
-    // Stop the form from reloading the page on submit
-    e.preventDefault(); 
-    
-    const name = document.getElementById('signup-name').value;
-    const email = document.getElementById('signup-email').value;
-    const password = document.getElementById('signup-password').value;
-    
-    alert(`Sign up attempt with:\nName: ${name}\nEmail: ${email}\nPassword: ${password}`);
-    console.log('Signup:', { name, email, password });
-}
-function toggleForms(e) {
-    // Stop the link (<a> tag) from trying to navigate
-    e.preventDefault(); 
-    
-    const loginForm = document.getElementById('login-form');
-    const signupForm = document.getElementById('signup-form');
-    
-    if (loginForm.style.display === 'none') {
-        loginForm.style.display = 'block';
-        signupForm.style.display = 'none';
-    } else {
-        loginForm.style.display = 'none';
-        signupForm.style.display = 'block';
-    }
-}
-
-function handleLogin(e) {
-    // Stop the form from reloading the page on submit
-    e.preventDefault(); 
-    
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    
-    console.log('Login:', { email, password });
-    
-    // Redirect to the main page
-    window.location.href = "../main page/main page.html";
-}
-
-function handleSignup(e) {
-    // Stop the form from reloading the page on submit
-    e.preventDefault(); 
-    
-    const name = document.getElementById('signup-name').value;
-    const email = document.getElementById('signup-email').value;
-    const password = document.getElementById('signup-password').value;
-    
-    alert(`Sign up attempt with:\nName: ${name}\nEmail: ${email}\nPassword: ${password}`);
-    console.log('Signup:', { name, email, password });
+function signup() {
+    document.getElementById('message').innerText = "Account created!";
+    document.getElementById('message').style.color = "green";
+    setTimeout(showLogin, 1500);
 }
