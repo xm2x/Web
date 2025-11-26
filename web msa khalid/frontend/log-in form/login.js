@@ -22,6 +22,11 @@ function togglePassword(fieldId) {
 function login() {
     document.getElementById('message').innerText = "Logging you in...";
     document.getElementById('message').style.color = "green";
+
+    // Redirect to main page after 1 second
+    setTimeout(() => {
+        window.location.href = "../main page/main page.html"; // change to your real file name
+    }, 1000);
 }
 
 function signup() {
