@@ -62,7 +62,6 @@ function handleLogin(e) {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
     
-    alert(`Login attempt with:\nEmail: ${email}\nPassword: ${password}`);
     console.log('Login:', { email, password });
     
     // Redirect to the main page
