@@ -29,9 +29,10 @@ body {
   overflow: auto;
 }
 .cover {
-  width: 100%;
+  width: 80%;
+  max-width: 220px;
   border-radius: 6px;
-  margin-bottom: 8px;
+  margin: 0 auto 8px;
   display: block;
 }
 .book-meta .title { font-size: 1.05rem; margin: 8px 0; }
@@ -61,6 +62,77 @@ body {
   width: auto; max-width: 100%; max-height: 85vh;
   display: block;
 }
+
+/* Ensure the image itself fills the fullscreen viewport when requestFullscreen is used on the image */
+img:fullscreen, img:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+}
+
+/* Night mode styles */
+.night-mode .viewer {
+  background: #0b0b0f;
+}
+.night-mode .viewer img {
+  filter: brightness(0.95) contrast(1.02);
+}
+.night-mode .book-meta {
+  background: #0f0f13;
+  color: #ddd;
+}
+.night-mode .chapters a {
+  color: #ddd;
+}
+.night-mode .chapters a:hover, .night-mode .chapters a.active {
+  background: #1a1a1f;
+}
+
+/* Make night mode apply to most page areas while preserving the nav and image appearance */
+.night-mode {
+  background-color: #07070a !important;
+  color: #dcdcdc !important;
+}
+
+.night-mode .container,
+.night-mode .layout,
+.night-mode .viewer-area,
+.night-mode .sidebar,
+.night-mode .book-meta,
+.night-mode .chapters,
+.night-mode .controls,
+.night-mode .site-footer,
+.night-mode .main,
+.night-mode .content-area {
+  background-color: #0b0b10 !important;
+  color: #ddd !important;
+}
+
+/* Keep the navigation bar colors unchanged (exclude it from night-mode) */
+.night-mode .nav {
+  background-color: #eb6a6a !important; /* original nav color */
+  color: #fff !important;
+}
+.night-mode .logo h1 { color: #fff !important; }
+
+/* Ensure links and buttons are readable in night mode */
+.night-mode a { color: #cfe8ff !important; }
+.night-mode .menu a { color: #fff !important; }
+.night-mode .controls button { background: #121217 !important; color: #e6e6e6 !important; border-color: #222 !important; }
+
+/* Exclude all images from being dimmed or color-shifted */
+.night-mode img {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Specifically ensure the viewer background is slightly darker but images stay intact */
+.night-mode .viewer { background: #05050a !important; }
+
+/* Footer tweak */
+.night-mode .site-footer { background: #0b0b10 !important; color: #bfbfbf !important; }
 
 .jump { display: flex; gap: 8px; align-items: center; }
 .jump input {

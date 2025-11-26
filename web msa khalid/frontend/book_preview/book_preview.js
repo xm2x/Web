@@ -1,8 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Use embedded SVG data-URIs for quick local testing of page turning
+  // These avoid needing separate image files and let you test navigation immediately.
+  const makeDataSvg = (bg1, bg2, text) => {
+    const svg = `
+      <svg xmlns='http://www.w3.org/2000/svg' width='1200' height='1600' viewBox='0 0 1200 1600'>
+        <defs>
+          <linearGradient id='g' x1='0' x2='1' y1='0' y2='1'>
+            <stop offset='0' stop-color='${bg1}' />
+            <stop offset='1' stop-color='${bg2}' />
+          </linearGradient>
+        </defs>
+        <rect width='100%' height='100%' fill='url(#g)' />
+        <text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Arial, Helvetica, sans-serif' font-size='56' fill='rgba(255,255,255,0.95)'>${text}</text>
+      </svg>`;
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+  };
+
   const pages = [
-    'images/page1.jpg',
-    'images/page2.jpg',
-    'images/page3.jpg'
+    makeDataSvg('#f3b562', '#e86f6f', 'Sample Page 1'),
+    makeDataSvg('#2bb7b7', '#2b9bd7', 'Sample Page 2'),
+    makeDataSvg('#d69bd7', '#f3b1c1', 'Sample Page 3')
   ];
 
   let current = 0;
@@ -18,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggleSidebar = document.getElementById('toggleSidebar');
   const sidebar = document.getElementById('sidebar');
   const fullscreenBtn = document.getElementById('fullscreen');
+  const nightModeBtn = document.getElementById('nightModeBtn');
 
   pageCount.textContent = pages.length;
   jumpInput.max = pages.length;
@@ -54,13 +72,28 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleSidebar.setAttribute('aria-pressed', shown ? 'true' : 'false');
   });
 
+  // Make the image itself go fullscreen (so the photo, not the whole page)
   fullscreenBtn.addEventListener('click', async () => {
-    if (!document.fullscreenElement) {
-      await document.documentElement.requestFullscreen();
-    } else {
-      await document.exitFullscreen();
+    try {
+      if (!document.fullscreenElement) {
+        if (pageImage.requestFullscreen) await pageImage.requestFullscreen();
+        else if (pageImage.webkitRequestFullscreen) await pageImage.webkitRequestFullscreen();
+        else await document.documentElement.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    } catch (err) {
+      console.error('Fullscreen error:', err);
     }
   });
+
+  // Night mode toggle: toggles a class on <body> so CSS can change colors
+  if (nightModeBtn) {
+    nightModeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('night-mode');
+      nightModeBtn.classList.toggle('active');
+    });
+  }
 
   document.getElementById('chapterList').addEventListener('click', (e) => {
     const a = e.target.closest('a[data-chapter]');
@@ -82,6 +115,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadPage(0);
   });
+
+  // Read query params and update preview cover/title if provided
+  const params = new URLSearchParams(window.location.search);
+  const titleParam = params.get('title');
+  const imgParam = params.get('img');
+
+  if (titleParam) {
+    const titleEl = document.querySelector('.book-meta .title');
+    if (titleEl) titleEl.textContent = decodeURIComponent(titleParam);
+    if (document.title) document.title = `${decodeURIComponent(titleParam)} — Book Preview`;
+  }
+
+  if (imgParam) {
+    const coverEl = document.querySelector('.book-meta .cover');
+    if (coverEl) {
+      const imgPath = decodeURIComponent(imgParam);
+      // Try the path as provided first
+      coverEl.src = imgPath;
+
+      // If it fails to load, try a fallback relative to the main page folder
+      function tryAlt() {
+        const altPath = `../main page/${imgPath}`;
+        if (coverEl.src === altPath) return;
+        coverEl.src = altPath;
+        coverEl.removeEventListener('error', tryAlt);
+      }
+      coverEl.addEventListener('error', tryAlt);
+    }
+  }
 });
 
 const infoImage = document.getElementById('info');
