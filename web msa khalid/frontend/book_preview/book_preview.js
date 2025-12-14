@@ -1,6 +1,8 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Use embedded SVG data-URIs for quick local testing of page turning
-  // These avoid needing separate image files and let you test navigation immediately.
+$(document).ready(function() {
+  // API Base URL - adjust based on your server setup
+  const API_URL = '../../backend/api';
+
+  // Fallback SVG data for offline testing
   const makeDataSvg = (bg1, bg2, text) => {
     const svg = `
       <svg xmlns='http://www.w3.org/2000/svg' width='1200' height='1600' viewBox='0 0 1200 1600'>
@@ -16,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
   };
 
-  // Create per-chapter page arrays using the embedded SVGs
+  // Default fallback pages if API fails
   const pagesByChapter = {
     '1': [
       makeDataSvg('#f3b562', '#e86f6f', 'Chapter 1 — Page 1'),
@@ -35,61 +37,65 @@ document.addEventListener('DOMContentLoaded', () => {
   // Start with chapter 1 by default
   let pages = pagesByChapter['1'].slice();
   let current = 0;
+  let currentBookId = null;
+  let chapters = [];
 
-  const pageImage = document.getElementById('pageImage');
-  const pageNumber = document.getElementById('pageNumber');
-  const pageCount = document.getElementById('pageCount');
-  const prevBtn = document.getElementById('prevPage');
-  const nextBtn = document.getElementById('nextPage');
-  const jumpInput = document.getElementById('jumpTo');
-  const jumpBtn = document.getElementById('jumpBtn');
-  const viewer = document.getElementById('viewer');
-  const toggleSidebar = document.getElementById('toggleSidebar');
-  const sidebar = document.getElementById('sidebar');
-  const fullscreenBtn = document.getElementById('fullscreen');
-  const nightModeBtn = document.getElementById('nightModeBtn');
+  // jQuery selectors for DOM elements
+  const $pageImage = $('#pageImage');
+  const $pageNumber = $('#pageNumber');
+  const $pageCount = $('#pageCount');
+  const $prevBtn = $('#prevPage');
+  const $nextBtn = $('#nextPage');
+  const $jumpInput = $('#jumpTo');
+  const $jumpBtn = $('#jumpBtn');
+  const $viewer = $('#viewer');
+  const $toggleSidebar = $('#toggleSidebar');
+  const $sidebar = $('#sidebar');
+  const $fullscreenBtn = $('#fullscreen');
+  const $nightModeBtn = $('#nightModeBtn');
+  const $chapterList = $('#chapterList');
 
-  pageCount.textContent = pages.length;
-  jumpInput.max = pages.length;
+  $pageCount.text(pages.length);
+  $jumpInput.attr('max', pages.length);
   loadPage(current);
 
   function loadPage(index) {
     index = Math.max(0, Math.min(index, pages.length - 1));
     current = index;
-    pageImage.src = pages[current];
-    pageImage.alt = `Page ${current + 1}`;
-    pageNumber.textContent = current + 1;
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === pages.length - 1;
-    jumpInput.value = current + 1;
+    $pageImage.attr('src', pages[current]).attr('alt', `Page ${current + 1}`);
+    $pageNumber.text(current + 1);
+    $prevBtn.prop('disabled', current === 0);
+    $nextBtn.prop('disabled', current === pages.length - 1);
+    $jumpInput.val(current + 1);
   }
 
-  prevBtn.addEventListener('click', () => loadPage(current - 1));
-  nextBtn.addEventListener('click', () => loadPage(current + 1));
-  jumpBtn.addEventListener('click', () => {
-    const v = parseInt(jumpInput.value, 10);
+  $prevBtn.on('click', () => loadPage(current - 1));
+  $nextBtn.on('click', () => loadPage(current + 1));
+  $jumpBtn.on('click', () => {
+    const v = parseInt($jumpInput.val(), 10);
     if (!isNaN(v)) loadPage(v - 1);
   });
 
-  viewer.addEventListener('keydown', (e) => {
+  $viewer.on('keydown', (e) => {
     if (e.key === 'ArrowLeft') loadPage(current - 1);
     if (e.key === 'ArrowRight') loadPage(current + 1);
   });
 
-  pageImage.addEventListener('click', () => loadPage(current + 1));
+  $pageImage.on('click', () => loadPage(current + 1));
 
-  toggleSidebar.addEventListener('click', () => {
-    const shown = sidebar.style.display !== 'none';
-    sidebar.style.display = shown ? 'none' : '';
-    toggleSidebar.setAttribute('aria-pressed', shown ? 'true' : 'false');
+  $toggleSidebar.on('click', () => {
+    const shown = $sidebar.css('display') !== 'none';
+    $sidebar.toggle();
+    $toggleSidebar.attr('aria-pressed', shown ? 'true' : 'false');
   });
 
   // Make the image itself go fullscreen (so the photo, not the whole page)
-  fullscreenBtn.addEventListener('click', async () => {
+  $fullscreenBtn.on('click', async () => {
     try {
+      const imageElement = $pageImage[0];
       if (!document.fullscreenElement) {
-        if (pageImage.requestFullscreen) await pageImage.requestFullscreen();
-        else if (pageImage.webkitRequestFullscreen) await pageImage.webkitRequestFullscreen();
+        if (imageElement.requestFullscreen) await imageElement.requestFullscreen();
+        else if (imageElement.webkitRequestFullscreen) await imageElement.webkitRequestFullscreen();
         else await document.documentElement.requestFullscreen();
       } else {
         await document.exitFullscreen();
@@ -100,102 +106,122 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Night mode toggle: toggles a class on <body> so CSS can change colors
-  if (nightModeBtn) {
-    nightModeBtn.addEventListener('click', () => {
-      document.body.classList.toggle('night-mode');
-      nightModeBtn.classList.toggle('active');
+  $nightModeBtn.on('click', () => {
+    $('body').toggleClass('night-mode');
+    $nightModeBtn.toggleClass('active');
+  });
+
+  // Function to fetch chapter pages from API
+  function fetchChapterPages(chapterId) {
+    $.ajax({
+      url: `${API_URL}/get_chapter_pages.php?chapter_id=${chapterId}`,
+      method: 'GET',
+      dataType: 'json',
+      success: function(response) {
+        if (response.success && response.data.length > 0) {
+          pages = response.data.map(p => p.image_path);
+          $pageCount.text(pages.length);
+          $jumpInput.attr('max', pages.length);
+          loadPage(0);
+        } else {
+          console.log('No pages found, using fallback');
+        }
+      },
+      error: function(err) {
+        console.error('Error fetching pages:', err);
+      }
     });
   }
 
-  const chapterList = document.getElementById('chapterList');
-  chapterList.addEventListener('click', (e) => {
-    const a = e.target.closest('a[data-chapter]');
-    if (!a) return;
+  // Function to fetch and load chapters from API
+  function fetchChaptersForBook(bookId) {
+    $.ajax({
+      url: `${API_URL}/get_book.php?id=${bookId}`,
+      method: 'GET',
+      dataType: 'json',
+      success: function(response) {
+        if (response.success && response.data.chapters) {
+          chapters = response.data.chapters;
+          $chapterList.empty();
+          chapters.forEach(ch => {
+            $chapterList.append(`<li><a href="#" data-chapter="${ch.id}">${ch.title}</a></li>`);
+          });
+          // Load first chapter
+          if (chapters.length > 0) {
+            fetchChapterPages(chapters[0].id);
+            $chapterList.find('a').first().addClass('active');
+          }
+        }
+      },
+      error: function(err) {
+        console.error('Error fetching book chapters:', err);
+      }
+    });
+  }
+
+  // Chapter click handler
+  $chapterList.on('click', 'a[data-chapter]', function(e) {
     e.preventDefault();
-
-    const ch = a.getAttribute('data-chapter');
-    if (pagesByChapter[ch]) {
-      pages = pagesByChapter[ch].slice();
-    } else {
-      pages = pagesByChapter['1'].slice();
-    }
-
-    pageCount.textContent = pages.length;
-    jumpInput.max = pages.length;
-
-    document.querySelectorAll('#chapterList a').forEach(x => x.classList.remove('active'));
-    a.classList.add('active');
-
-    loadPage(0);
+    const chapterId = $(this).attr('data-chapter');
+    
+    $('#chapterList a').removeClass('active');
+    $(this).addClass('active');
+    
+    // Fetch pages from database for this chapter
+    fetchChapterPages(chapterId);
   });
-
-  // Activate chapter 1 visually and load its first page on open
-  (function openDefaultChapter() {
-    const first = chapterList.querySelector('a[data-chapter="1"]');
-    if (first) {
-      document.querySelectorAll('#chapterList a').forEach(x => x.classList.remove('active'));
-      first.classList.add('active');
-    }
-    pages = pagesByChapter['1'].slice();
-    pageCount.textContent = pages.length;
-    jumpInput.max = pages.length;
-    loadPage(0);
-  })();
 
   // Read query params and update preview cover/title if provided
   const params = new URLSearchParams(window.location.search);
   const titleParam = params.get('title');
   const imgParam = params.get('img');
+  const bookIdParam = params.get('book_id');
+
+  if (bookIdParam) {
+    // Load book from database
+    currentBookId = bookIdParam;
+    fetchChaptersForBook(bookIdParam);
+  }
 
   if (titleParam) {
-    const titleEl = document.querySelector('.book-meta .title');
-    if (titleEl) titleEl.textContent = decodeURIComponent(titleParam);
-    if (document.title) document.title = `${decodeURIComponent(titleParam)} — Book Preview`;
+    const decodedTitle = decodeURIComponent(titleParam);
+    $('.book-meta .title').text(decodedTitle);
+    document.title = `${decodedTitle} — Book Preview`;
   }
 
   if (imgParam) {
-    const coverEl = document.querySelector('.book-meta .cover');
-    if (coverEl) {
+    const $coverEl = $('.book-meta .cover');
+    if ($coverEl.length) {
       const imgPath = decodeURIComponent(imgParam);
       // Try the path as provided first
-      coverEl.src = imgPath;
+      $coverEl.attr('src', imgPath);
 
       // If it fails to load, try a fallback relative to the main page folder
-      function tryAlt() {
+      $coverEl.on('error', function() {
         const altPath = `../main page/${imgPath}`;
-        if (coverEl.src === altPath) return;
-        coverEl.src = altPath;
-        coverEl.removeEventListener('error', tryAlt);
-      }
-      coverEl.addEventListener('error', tryAlt);
+        if ($(this).attr('src') !== altPath) {
+          $(this).attr('src', altPath);
+        }
+      });
     }
   }
-});
 
-const infoImage = document.getElementById('info');
-            
-            // Get the dropdown menu element by its ID
-            const dropdownMenu = document.getElementById('dropdown-menu');
-            
-            // Function to show/hide the dropdown
-            function toggleDropdown() {
-                // Toggles the 'show' class on the dropdown menu
-                // If the class is present, display:block is applied (show)
-                // If the class is absent, display:none is applied (hide)
-                dropdownMenu.classList.toggle('show');
-            }
-            
-            // Add a click event listener to the image
-            infoImage.addEventListener('click', toggleDropdown);
-            
-            // Optional: Close the dropdown if the user clicks anywhere outside of it
-            window.onclick = function(event) {
-                // Check if the click event did NOT originate from the image
-                if (!event.target.matches('#info')) {
-                    // Check if the menu is currently visible (has the 'show' class)
-                    if (dropdownMenu.classList.contains('show')) {
-                        // Hide the menu
-                        dropdownMenu.classList.remove('show');
-                    }
-                }
-            }
+  // Dropdown menu functionality using jQuery
+  const $infoImage = $('#info');
+  const $dropdownMenu = $('#dropdown-menu');
+
+  function toggleDropdown() {
+    $dropdownMenu.toggleClass('show');
+  }
+
+  $infoImage.on('click', toggleDropdown);
+
+  // Close the dropdown if the user clicks anywhere outside of it
+  $(window).on('click', function(event) {
+    if (!$(event.target).is('#info')) {
+      if ($dropdownMenu.hasClass('show')) {
+        $dropdownMenu.removeClass('show');
+      }
+    }
+  });
+});
