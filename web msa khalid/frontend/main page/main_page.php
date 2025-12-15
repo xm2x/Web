@@ -1,127 +1,45 @@
 <?php
 session_start();
+
+// Database Configuration
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'bookstore_db');
+
+// Create connection
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+// Check connection
+if ($conn->connect_error) {
+    http_response_code(500);
+    echo json_encode(['success' => false, 'error' => 'Database connection failed: ' . $conn->connect_error]);
+    exit();
+}
+
+// Set charset to UTF-8
+$conn->set_charset("utf8");
+
+// Allow CORS
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+
+// Get all books from database
+$sql = "SELECT id, title, author, description, cover_image_path FROM books ORDER BY id DESC";
+$result = $conn->query($sql);
+
+if (!$result) {
+    http_response_code(500);
+    echo json_encode(['success' => false, 'error' => 'Query failed: ' . $conn->error]);
+    exit();
+}
+
+$books = [];
+while ($row = $result->fetch_assoc()) {
+    $books[] = $row;
+}
+
+echo json_encode(['success' => true, 'books' => $books]);
+
+$conn->close();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>home page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main page.css">
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-</head>
-<body>
-    
-    <section class="nav">
-        <div class="logo">
-            <h1>your book Space</h1>
-        </div> 
-        <search class="search">
-            <input type="text" placeholder="search...">
-            <button type="submit">search</button>
-        </search>
-
-        <div class="user-menu-wrapper">
-            <img src="download (17).jpg" alt="User Info" style="border-radius: 50%; width: 50px; height: 50px;" id="info">
-            <div id="dropdown-menu" class="dropdown-content">
-                <a href="../info/info.html">Profile</a>
-                <a href="../main page/main_page.php" class="home ">Home</a>
-                <a href="../about/about_us.html" class="about">About</a>
-                <a href="../contact/contact.html" class="contcat">Contact</a>
-                <a href="../log-in form/login.php">Logout</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="container">
-        <div class="menu">
-            <h1>Hello World</h1>
-        </div>
-    </section>
-    
-    <section class="content-area">
-        <section class="sidebar">
-            <h2>All categories</h2>
-            <select name="e book" id="option"><option value="ebooks">E-Books</option></select>
-            <select name="e book" id="option"><option value="ebooks">E-Books</option></select>
-            <select name="e book" id="option"><option value="ebooks"></option></select>
-        </section>
-        
-        <section class="main">
-            <cards class="card">
-                <img src="Book Cover Designer - David Gardias (1).jpeg" alt="book1">
-                <h3>Book Title 1</h3>
-            </cards>
-            
-            <cards class="card">
-                <img src="How to Use Colors in Marketing and Advertising.jpeg" alt="book2">
-                <h3>Book Title 2</h3>
-            </cards>
-
-            <cards class="card">
-                <img src="Nightbooks.jpeg" alt="book3">
-                <h3>Book Title 3</h3>
-            </cards>
-
-            <cards class="card">
-                <img src="Концептуальная иллюстрация и анимация.jpeg" alt="book1">
-                <h3>Book Title 1</h3>
-            </cards>
-
-            <cards class="card">
-                <img src="The Best Sci-Fi Books of All Time _ Penguin Random House.jpeg" alt="book1">
-                <h3>Book Title 1</h3>
-            </cards>
-
-            <cards class="card">
-                <img src="Premade Book Covers - Premade Non-fiction, Business Book Covers -_.jpeg" alt="book1">
-                <h3>Book Title 1</h3>
-            </cards>
-            
-            <cards class="card">
-                <img src="download (23).jpg" alt="book1">
-                <h3>Book Title 1</h3>
-            </cards>
-            
-            <cards class="card">
-                <img src="Premade Book Covers - Premade Non-fiction, Business Book Covers -_.jpeg" alt="book1">
-                <h3>Book Title 1</h3>
-            </cards>
-            <cards class="card">
-                <img src="Premade Book Covers - Premade Non-fiction, Business Book Covers -_.jpeg" alt="book1">
-                <h3>Book Title 1</h3>
-            </cards>
-            <cards class="card">
-                <img src="Premade Book Covers - Premade Non-fiction, Business Book Covers -_.jpeg" alt="book1">
-                <h3>Book Title 1</h3>
-            </cards>
-            <cards class="card">
-                <img src="Premade Book Covers - Premade Non-fiction, Business Book Covers -_.jpeg" alt="book1">
-                <h3>Book Title 1</h3>
-            </cards>
-            <cards class="card">
-                <img src="Premade Book Covers - Premade Non-fiction, Business Book Covers -_.jpeg" alt="book1">
-                <h3>Book Title 1</h3>
-            </cards>
-            <cards class="card">
-                <img src="Premade Book Covers - Premade Non-fiction, Business Book Covers -_.jpeg" alt="book1">
-                <h3>Book Title 1</h3>
-            </cards>
-            <cards class="card">
-                <img src="Premade Book Covers - Premade Non-fiction, Business Book Covers -_.jpeg" alt="book1">
-                <h3>Book Title 1</h3>
-            </cards>
-            <cards class="card">
-                <img src="Premade Book Covers - Premade Non-fiction, Business Book Covers -_.jpeg" alt="book1">
-                <h3>Book Title 1</h3>
-            </cards>
-        </section>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 Your Book Space. All rights reserved.</p>
-    </footer>
-
-    <script src="main page.js"></script>
-</body>
-</html>
