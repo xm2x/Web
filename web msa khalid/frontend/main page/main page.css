@@ -285,3 +285,83 @@ footer {
 }
 
 
+/* ===============================Modal Styles --- */
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* 10% from the top and centered */
+    padding: 20px;
+    border: 1px solid #4b4949;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 600px; /* Max width for a nice size */
+    border-radius: 8px;
+    height: 500px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #6d0101;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-body {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-top: 40px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    justify-self: center;
+
+
+}
+
+.modal-body img {
+    width: 150px; /* Size of the book cover in the modal */
+    height: auto;
+    flex-shrink: 0;
+    border-radius: 4px;
+}
+
+.modal-info {
+    flex-grow: 1;
+}
+
+.preview-button {
+    display: inline-block;
+    background-color: #5cb85c; /* Green background */
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.preview-button:hover {
+    background-color: #4cae4c;
+}
