@@ -691,11 +691,24 @@
                         showMessage('addBookMessage', `Book "${title}" added successfully!`, 'success');
                         loadBooks();
                     } else {
-                        showMessage('addBookMessage', 'Error: ' + response.error, 'error');
+                        // Show detailed error message
+                        let errorMsg = response.error || 'Unknown error';
+                        console.error('Add book error:', response);
+                        showMessage('addBookMessage', 'Error: ' + errorMsg, 'error');
                     }
                 },
-                error: function() {
-                    showMessage('addBookMessage', 'Error creating book', 'error');
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', { xhr, status, error });
+                    let errorMsg = 'Error creating book';
+                    try {
+                        if (xhr.responseText) {
+                            const response = JSON.parse(xhr.responseText);
+                            errorMsg = response.error || errorMsg;
+                        }
+                    } catch (e) {
+                        errorMsg = xhr.status + ': ' + xhr.statusText;
+                    }
+                    showMessage('addBookMessage', errorMsg, 'error');
                 }
             });
         }

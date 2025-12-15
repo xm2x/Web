@@ -30,12 +30,12 @@ if ($fileSize > $maxSize) {
 }
 
 // Validate file type
-$allowedExtensions = ['pdf', 'epub', 'txt'];
+$allowedExtensions = ['pdf', 'epub', 'txt', 'doc', 'docx', 'mobi', 'azw', 'azw3', 'odt', 'cbr', 'cbz'];
 $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
 if (!in_array($fileExtension, $allowedExtensions)) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'error' => 'Invalid file type. Allowed: PDF, EPUB, TXT']);
+    echo json_encode(['success' => false, 'error' => 'Invalid file type. Allowed: PDF, EPUB, TXT, DOC, DOCX, MOBI, AZW, AZW3, ODT, CBR, CBZ']);
     exit();
 }
 

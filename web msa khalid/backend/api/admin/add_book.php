@@ -1,22 +1,25 @@
 <?php
 require_once '../../config.php';
 
+header('Content-Type: application/json');
+
 // Get JSON data
-$data = json_decode(file_get_contents("php://input"), true);
+$input = file_get_contents("php://input");
+$data = json_decode($input, true);
 
 if (!$data) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'error' => 'Invalid request']);
+    echo json_encode(['success' => false, 'error' => 'Invalid JSON data']);
     exit();
 }
 
-$title = $conn->real_escape_string($data['title'] ?? '');
-$author = $conn->real_escape_string($data['author'] ?? '');
-$description = $conn->real_escape_string($data['description'] ?? '');
-$fileContent = $data['file_content'] ?? null;
-$fileName = $conn->real_escape_string($data['file_name'] ?? '');
-$fileExtension = $conn->real_escape_string($data['file_extension'] ?? '');
-$fileSize = $data['file_size'] ?? 0;
+$title = isset($data['title']) ? trim($data['title']) : '';
+$author = isset($data['author']) ? trim($data['author']) : '';
+$description = isset($data['description']) ? trim($data['description']) : '';
+$fileContent = isset($data['file_content']) ? $data['file_content'] : null;
+$fileName = isset($data['file_name']) ? trim($data['file_name']) : '';
+$fileExtension = isset($data['file_extension']) ? trim($data['file_extension']) : '';
+$fileSize = isset($data['file_size']) ? intval($data['file_size']) : 0;
 
 if (!$title || !$author) {
     http_response_code(400);
@@ -24,26 +27,44 @@ if (!$title || !$author) {
     exit();
 }
 
-// Decode file content from base64
-$fileContentBinary = null;
-if ($fileContent) {
-    $fileContentBinary = base64_decode($fileContent);
+// Escape strings
+$title = $conn->real_escape_string($title);
+$author = $conn->real_escape_string($author);
+$description = $conn->real_escape_string($description);
+$fileName = $conn->real_escape_string($fileName);
+$fileExtension = $conn->real_escape_string($fileExtension);
+
+// Handle file content - it's base64 encoded
+$fileContentSQL = "NULL";
+if ($fileContent && !empty($fileContent)) {
+    $fileContent = $conn->real_escape_string($fileContent);
+    $fileContentSQL = "'$fileContent'";
 }
 
-// Insert book into database
-$sql = "INSERT INTO books (title, author, description, file_content, file_name, file_extension, file_size) 
-        VALUES ('$title', '$author', '$description', " . ($fileContent ? "'" . $conn->real_escape_string($fileContent) . "'" : "NULL") . ", '$fileName', '$fileExtension', $fileSize)";
+// Build SQL query carefully
+$sql = "INSERT INTO books (title, author, description, file_content, file_name, file_extension, file_size) VALUES (
+    '$title',
+    '$author',
+    '$description',
+    $fileContentSQL,
+    '$fileName',
+    '$fileExtension',
+    $fileSize
+)";
 
 if ($conn->query($sql) === TRUE) {
-    $bookId = $conn->insert_id;
     echo json_encode([
         'success' => true,
         'message' => 'Book added successfully',
-        'book_id' => $bookId
+        'book_id' => $conn->insert_id
     ]);
 } else {
     http_response_code(500);
-    echo json_encode(['success' => false, 'error' => 'Database error: ' . $conn->error]);
+    echo json_encode([
+        'success' => false,
+        'error' => $conn->error,
+        'hint' => 'Make sure books table has: file_content, file_name, file_extension, file_size columns'
+    ]);
 }
 
 $conn->close();
