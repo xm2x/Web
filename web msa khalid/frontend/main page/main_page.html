@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page - Your Book Space</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main page.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+</head>
+<body>
+    
+    <section class="nav">
+        <div class="logo">
+            <h1>your book Space</h1>
+        </div> 
+        <search class="search">
+            <input type="text" id="searchInput" placeholder="search...">
+            <button type="submit" onclick="searchBooks()">search</button>
+        </search>
+
+        <div class="user-menu-wrapper">
+            <img src="download (17).jpg" alt="User Info" style="border-radius: 50%; width: 50px; height: 50px;" id="info">
+            <div id="dropdown-menu" class="dropdown-content">
+                <a href="../info/info.html">Profile</a>
+                <a href="main_page.html" class="home">Home</a>
+                <a href="../about/about_us.html" class="about">About</a>
+                <a href="../contact/contact.html" class="contact">Contact</a>
+                <a href="../log-in form/login.php">Logout</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="menu">
+            <h1>Welcome to Your Book Space</h1>
+        </div>
+    </section>
+    
+    <section class="content-area">
+        <section class="sidebar">
+            <h2>Categories</h2>
+            <select id="categorySelect" onchange="filterByCategory()">
+                <option value="">All Books</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Non-Fiction">Non-Fiction</option>
+                <option value="Mystery">Mystery</option>
+                <option value="Romance">Romance</option>
+                <option value="Science Fiction">Science Fiction</option>
+            </select>
+        </section>
+        
+        <section class="main" id="booksList">
+            <!-- Books will be loaded here dynamically -->
+            <p style="color: #999;">Loading books...</p>
+        </section>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Your Book Space. All rights reserved.</p>
+    </footer>
+
+    <script src="main page.js"></script>
+    <script>
+        // Load books from PHP API
+        function loadBooks() {
+            fetch('./main_page.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.books) {
+                        displayBooks(data.books);
+                    }
+                })
+                .catch(error => console.error('Error loading books:', error));
+        }
+
+        // Display books
+        function displayBooks(books) {
+            const booksList = document.getElementById('booksList');
+            
+            if (books.length === 0) {
+                booksList.innerHTML = '<p style="color: #999;">No books available.</p>';
+                return;
+            }
+
+            let html = '';
+            books.forEach(book => {
+                html += `
+                    <div class="card" onclick="selectBookForChapters(${book.id}, '${book.title.replace(/'/g, "\\'")}')">
+                        <img src="${book.cover_image_path || 'default-cover.jpg'}" alt="${book.title}">
+                        <h3>${book.title}</h3>
+                        <p style="font-size: 12px; color: #666;">by ${book.author}</p>
+                    </div>
+                `;
+            });
+            
+            booksList.innerHTML = html;
+        }
+
+        // Search books
+        function searchBooks() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            fetch('./main_page.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.books) {
+                        const filtered = data.books.filter(book => 
+                            book.title.toLowerCase().includes(searchTerm) ||
+                            book.author.toLowerCase().includes(searchTerm)
+                        );
+                        displayBooks(filtered);
+                    }
+                })
+                .catch(error => console.error('Error searching books:', error));
+        }
+
+        // Filter by category
+        function filterByCategory() {
+            // For now, just reload all books. You can add category filtering later
+            loadBooks();
+        }
+
+        // Select book to add chapters
+        function selectBookForChapters(bookId, bookTitle) {
+            // Redirect to admin page with book ID
+            window.location.href = `../../backend/admin.html?book_id=${bookId}`;
+        }
+
+        // Load books on page load
+        window.addEventListener('load', loadBooks);
+    </script>
+</body>
+</html>
