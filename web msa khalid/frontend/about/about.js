@@ -28,6 +28,11 @@ $(document).ready(function() {
         $footerText.html($footerText.html().replace(/&copy; \d{4}/, '&copy; ' + currentYear));
     }
 
+
+
+
+
+
     // --- 3. Scroll to Top Button Logic ---
     
     // Create the button, add it to the body, and hide it immediately

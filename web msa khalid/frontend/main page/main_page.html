@@ -13,11 +13,11 @@
         <div class="logo">
             <h1>your book Space</h1>
         </div> 
-        <search class="search">
-            <input type="text" placeholder="search...">
-            <button type="submit">search</button>
-        </search>
-        
+    <form action="search_results.php" method="GET" class="search">
+    <input type="text" name="query" placeholder="Search by title or author...">
+    <button type="submit">Search</button>
+    </form>
+    
 
         <div class="user-menu-wrapper">
             <img src="download (17).jpg" alt="User Info" style="border-radius: 50%; width: 50px; height: 50px;" id="info">
@@ -26,25 +26,48 @@
                 <a href="../main page/main_page.php" class="home ">Home</a>
                 <a href="../about/about_us.html" class="about">About</a>
                 <a href="../contact/contact.html" class="contcat">Contact</a>
-                <a href="../log-in form/login.php">Logout</a>
+                <a href="../log-in form/logout.php">Logout</a>
             </div>
         </div>
     </section>
 
-    <section class="container">
-        <div class="menu">
-            <h1>Hello World</h1>
+<section class="container">
+    <div class="menu">
+        <h1>New Arrivals</h1>
         </div>
+    </div>
+</section>
+    
+    <section>
+        <section class="header">
+            <a href=""> best seller</a>
+            <a href=""> since fiction</a>
+            <a href=""> fantasy</a>
+            <a href=""> romance</a>
+            <a href=""> horror</a>
+            <a href=""> thriller</a>
+            <a href=""> mystery</a>
+            <a href=""> science</a>
+            <a href=""> history</a>
+            <a href=""> biography</a>
+            <a href=""> self help</a>
+            <a href=""> children</a>
+            <a href=""> non fiction</a>
+            <a href=""> travel</a>
+        </section>
     </section>
     
+
+
     <section class="content-area">
-        <section class="sidebar">
+        <!-- <section class="sidebar">
             <h2>All categories</h2>
             <select name="e book" id="option"><option value="ebooks">E-Books</option></select>
             <select name="e book" id="option"><option value="ebooks">E-Books</option></select>
             <select name="e book" id="option"><option value="ebooks"></option></select>
-        </section>
+        </section> -->
         
+
         <section class="main">
     <cards class="card"
         data-title="Book Title 1"
@@ -98,6 +121,24 @@
         <img src="Premade Book Covers - Premade Non-fiction, Business Book Covers -_.jpeg" alt="book1">
         <h3>Book Title 1</h3>
     </cards>
+    
+    <cards class="card"
+        data-title="Book Title 1"
+        data-author="Author Name 1"
+        data-description="This is a fantastic first book about a thrilling adventure in a faraway land. A must-read for all."
+        data-preview="../preview/book1_preview.html">
+        <img src="Book Cover Designer - David Gardias (1).jpeg" alt="book1">
+        <h3>Book Title 1</h3>
+    </cards>
+    
+    <cards class="card"
+        data-title="Book Title 1"
+        data-author="Author Name 1"
+        data-description="This is a fantastic first book about a thrilling adventure in a faraway land. A must-read for all."
+        data-preview="../preview/book1_preview.html">
+        <img src="Концептуальная иллюстрация и анимация.jpeg" alt="book1">
+        <h3>Book Title 1</h3>
+    </cards>
 
     </section>
     </section>
@@ -111,14 +152,16 @@
                 <h2 id="modalBookTitle"></h2>
                 <p><strong>Author:</strong> <span id="modalBookAuthor"></span></p>
                 <p id="modalBookDescription"></p>
-                <a id="modalPreviewButton" href="../preview/book3_preview.html" class="preview-button">Go to Book Preview</a>
+                <a id="Preview" href="../book_preview/book_preview.html" class="preview-button">Go to Book Preview</a>
             </div>
         </div>
     </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="main2.js"></script>
 <script src="main page.js"></script>
+
 </body>
 </html>
 

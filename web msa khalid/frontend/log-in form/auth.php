@@ -1,44 +1,40 @@
 <?php
 session_start();
 
-// ==========================================
-// 1. DATABASE CONNECTION
-// ==========================================
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "bookstore_db";
+$dbname = "e book";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// ==========================================
-// 2. AUTHENTICATION LOGIC
-// ==========================================
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+    $action = $_POST['action'];
+
     // === REGISTER LOGIC ===
-    if (isset($_POST['action']) && $_POST['action'] == 'register') {
+    if ($action == 'register') {
         $name = $_POST['full_name'];
         $email = $_POST['email'];
-        $password = $_POST['password']; 
+        // Hash the password for security
+        $pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-        // Check if email already exists
-        $checkEmail = "SELECT * FROM users WHERE email='$email'";
-        $result = $conn->query($checkEmail);
+        // Secure check if email exists
+        $stmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
+        if ($result->num_rows > 0) { // Check if email exists
             header("Location: login.php?error=Email already exists");
-        } else {
-            // Insert user directly into DB (Simple/No Encryption)
-            $sql = "INSERT INTO users (full_name, email, password) VALUES ('$name', '$email', '$password')";
-
-            if ($conn->query($sql) === TRUE) {
+        } else { // Email doesn't exist, proceed with registration
+            $stmt = $conn->prepare("INSERT INTO users (full_name, email, password) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $name, $email, $pass);
+            
+            if ($stmt->execute()) {
                 header("Location: login.php?success=Account created! Please log in.");
             } else {
                 header("Location: login.php?error=Error creating account");
@@ -46,31 +42,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // === LOGIN LOGIC ===
-    if (isset($_POST['action']) && $_POST['action'] == 'login') {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+if (isset($_POST['action']) && $_POST['action'] == 'login') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-        // Simple check: Find a user with this Email AND this Password
-        $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
-        $result = $conn->query($sql);
+    // 1. Get the user from the database
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email=?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
-            // User found!
-            $row = $result->fetch_assoc();
-            
-            // Start Session
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        // 2. Verify the password
+        if (password_verify($password, $row['password'])) {
             $_SESSION['user_id'] = $row['id'];
-            $_SESSION['user_name'] = $row['full_name'];
-            
-            // Go to main page (FIXED: changed .html to .php)
-            header("Location: ../main page/main_page.php"); 
+            header("Location: ../main page/main_page.html"); 
+            exit();
         } else {
-            // No match found
-            header("Location: login.php?error=Incorrect email or password");
+            // Password is incorrect
+            header("Location: login.php?error=Invalid Credentials");
+            exit();
         }
     }
 }
-
+}
 $conn->close();
+
+header("Location: login.php?error=Invalid Credentials");
+exit();
 ?>

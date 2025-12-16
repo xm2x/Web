@@ -1,18 +1,21 @@
-function showSignup() {
-    document.getElementById('login-form').classList.add('hidden');
-    document.getElementById('signup-form').classList.remove('hidden');
-}
+function handleCredentialResponse(response) {
+    // Create a hidden form and submit it to your PHP
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'auth.php';
 
-function showLogin() {
-    document.getElementById('signup-form').classList.add('hidden');
-    document.getElementById('login-form').classList.remove('hidden');
-}
+    const actionInput = document.createElement('input');
+    actionInput.type = 'hidden';
+    actionInput.name = 'action';
+    actionInput.value = 'google_login';
 
-function togglePassword(fieldId) {
-    const field = document.getElementById(fieldId);
-    if (field.type === "password") {
-        field.type = "text";
-    } else {
-        field.type = "password";
-    }
+    const tokenInput = document.createElement('input');
+    tokenInput.type = 'hidden';
+    tokenInput.name = 'id_token';
+    tokenInput.value = response.credential;
+
+    form.appendChild(actionInput);
+    form.appendChild(tokenInput);
+    document.body.appendChild(form);
+    form.submit();
 }
