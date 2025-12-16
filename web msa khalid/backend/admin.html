@@ -635,6 +635,7 @@
                 data: formData,
                 processData: false,
                 contentType: false,
+                dataType: 'json',
                 xhr: function() {
                     const xhr = new window.XMLHttpRequest();
                     xhr.upload.addEventListener('progress', function(e) {
@@ -663,9 +664,19 @@
                     }
                 },
                 error: function(xhr, status, error) {
+                    // Try to parse error response
+                    let errorMsg = 'Error uploading file';
+                    if (xhr.responseText) {
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            errorMsg = response.error || errorMsg;
+                        } catch (e) {
+                            errorMsg = xhr.responseText || error || 'Unknown error';
+                        }
+                    }
                     // Clear form on error
                     $(`#${fileId}`).remove();
-                    showMessage('addBookMessage', `Error uploading file: ${error}`, 'error');
+                    showMessage('addBookMessage', errorMsg, 'error');
                 }
             });
         }
