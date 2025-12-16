@@ -785,14 +785,17 @@
             const chapterMatch = fileName.match(/ch[apter]*[\s_-]*(\d+)/i);
             let chapterNumber = chapterMatch ? chapterMatch[1] : '';
 
+            const chapterNumId = fileId + '-num';
+            const chapterTitleId = fileId + '-title';
+            
             const fileItemHtml = `
                 <div class="file-item" id="${fileId}">
                     <div>
                         <p><strong>${file.name}</strong></p>
-                        <label style="margin-bottom: 5px; display: block;">Chapter Number</label>
-                        <input type="number" placeholder="Chapter #" value="${chapterNumber}" class="chapter-num-input" style="width: 100px; padding: 5px; margin-bottom: 10px;">
-                        <label style="margin-bottom: 5px; display: block;">Chapter Title</label>
-                        <input type="text" placeholder="Chapter title" class="chapter-title-input" style="width: 100%; padding: 5px;">
+                        <label for="${chapterNumId}" style="margin-bottom: 5px; display: block;">Chapter Number</label>
+                        <input type="number" id="${chapterNumId}" name="chapter_num" placeholder="Chapter #" value="${chapterNumber}" class="chapter-num-input" style="width: 100px; padding: 5px; margin-bottom: 10px;">
+                        <label for="${chapterTitleId}" style="margin-bottom: 5px; display: block;">Chapter Title</label>
+                        <input type="text" id="${chapterTitleId}" name="chapter_title" placeholder="Chapter title" class="chapter-title-input" style="width: 100%; padding: 5px;">
                     </div>
                     <div class="file-progress">
                         <div class="file-progress-bar" style="width: 0%"></div>
