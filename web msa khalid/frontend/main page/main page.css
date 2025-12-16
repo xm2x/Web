@@ -285,3 +285,152 @@ footer {
 }
 
 
+/* ===============================Modal Styles --- */
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* 10% from the top and centered */
+    padding: 20px;
+    border: 1px solid #4b4949;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 600px; /* Max width for a nice size */
+    border-radius: 8px;
+    height: 500px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #6d0101;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-body {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-top: 40px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    justify-self: center;
+
+
+}
+
+.modal-body img {
+    width: 150px; /* Size of the book cover in the modal */
+    height: auto;
+    flex-shrink: 0;
+    border-radius: 4px;
+}
+
+.modal-info {
+    flex-grow: 1;
+}
+
+.preview-button {
+    display: inline-block;
+    background-color: #5cb85c; /* Green background */
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.preview-button:hover {
+    background-color: #4cae4c;
+}
+
+/* --- Optimized Search Bar --- */
+.search {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 20px; /* Rounded pill shape */
+    padding: 2px 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.search input[type="text"] {
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 250px;
+    font-size: 14px;
+}
+
+.search button[type="submit"] {
+    padding: 8px 20px;
+    border: none;
+    color: white;
+    background-color: #408940;
+    border-radius: 15px; /* Matches the pill shape */
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.search button[type="submit"]:hover {
+    background-color: #2e632e;
+}
+
+/* --- Sidebar & Dropdown Fix --- */
+section.sidebar {
+    width: 280px; /* Reduced from 650px which was too wide */
+    height: fit-content;
+    background-color: #f9f9f9;
+    padding: 25px;
+    margin-right: 20px;
+    border-radius: 12px;
+    margin-top: 0; /* Removed negative margin for better stability */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+section.sidebar h2 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #444;
+    border-bottom: 2px solid #eb6a6a;
+    padding-bottom: 10px;
+}
+
+/* Style the select dropdown */
+section.sidebar select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    font-size: 15px;
+    color: #555;
+    outline: none;
+    appearance: none; /* Removes default arrow to customize later if needed */
+    cursor: pointer;
+}

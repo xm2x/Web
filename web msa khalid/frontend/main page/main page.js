@@ -24,3 +24,20 @@ window.onclick = function(event) {
         }
     }
 }
+
+// ====================================
+// 2. BOOK CARD CLICK LOGIC
+// ====================================
+// Select all book cards
+const cards = document.querySelectorAll(".card");
+
+cards.forEach(card => {
+    card.addEventListener("click", () => {
+        // Get title and image source
+        const title = card.querySelector("h3").textContent;
+        const imgSrc = card.querySelector("img").getAttribute("src");
+
+        // Redirect to preview page with book data
+        window.location.href = `../book_preview/book_preview.html?title=${encodeURIComponent(title)}&img=${encodeURIComponent(imgSrc)}`;
+    });
+});
