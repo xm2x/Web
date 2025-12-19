@@ -2,11 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<<<<<<< HEAD
-    <title>Home Page - Your Book Space</title>
-=======
     <title>home page</title>
->>>>>>> origin/khalid-ooo
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main page.css">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
@@ -17,73 +13,61 @@
         <div class="logo">
             <h1>your book Space</h1>
         </div> 
-<<<<<<< HEAD
-        <search class="search">
-            <input type="text" id="searchInput" placeholder="search...">
-            <button type="submit" onclick="searchBooks()">search</button>
-        </search>
-=======
     <form action="search_results.php" method="GET" class="search">
     <input type="text" name="query" placeholder="Search by title or author...">
     <button type="submit">Search</button>
     </form>
     
->>>>>>> origin/khalid-ooo
 
         <div class="user-menu-wrapper">
             <img src="download (17).jpg" alt="User Info" style="border-radius: 50%; width: 50px; height: 50px;" id="info">
             <div id="dropdown-menu" class="dropdown-content">
                 <a href="../info/info.html">Profile</a>
-<<<<<<< HEAD
-                <a href="main_page.html" class="home">Home</a>
-                <a href="../about/about_us.html" class="about">About</a>
-                <a href="../contact/contact.html" class="contact">Contact</a>
-=======
                 <a href="../main page/main_page.php" class="home ">Home</a>
                 <a href="../about/about_us.html" class="about">About</a>
                 <a href="../contact/contact.html" class="contcat">Contact</a>
->>>>>>> origin/khalid-ooo
-                <a href="../log-in form/login.php">Logout</a>
+                <a href="../log-in form/logout.php">Logout</a>
             </div>
         </div>
     </section>
 
-    <section class="container">
-        <div class="menu">
-<<<<<<< HEAD
-            <h1>Welcome to Your Book Space</h1>
-=======
-            <h1>Hello World</h1>
->>>>>>> origin/khalid-ooo
+<section class="container">
+    <div class="menu">
+        <h1>New Arrivals</h1>
         </div>
+    </div>
+</section>
+    
+    <section>
+        <section class="header">
+            <a href=""> best seller</a>
+            <a href=""> since fiction</a>
+            <a href=""> fantasy</a>
+            <a href=""> romance</a>
+            <a href=""> horror</a>
+            <a href=""> thriller</a>
+            <a href=""> mystery</a>
+            <a href=""> science</a>
+            <a href=""> history</a>
+            <a href=""> biography</a>
+            <a href=""> self help</a>
+            <a href=""> children</a>
+            <a href=""> non fiction</a>
+            <a href=""> travel</a>
+        </section>
     </section>
     
+
+
     <section class="content-area">
-        <section class="sidebar">
-<<<<<<< HEAD
-            <h2>Categories</h2>
-            <select id="categorySelect" onchange="filterByCategory()">
-                <option value="">All Books</option>
-                <option value="Fiction">Fiction</option>
-                <option value="Non-Fiction">Non-Fiction</option>
-                <option value="Mystery">Mystery</option>
-                <option value="Romance">Romance</option>
-                <option value="Science Fiction">Science Fiction</option>
-            </select>
-        </section>
-        
-        <section class="main" id="booksList">
-            <!-- Books will be loaded here dynamically -->
-            <p style="color: #999;">Loading books...</p>
-        </section>
-    </section>
-=======
+        <!-- <section class="sidebar">
             <h2>All categories</h2>
             <select name="e book" id="option"><option value="ebooks">E-Books</option></select>
             <select name="e book" id="option"><option value="ebooks">E-Books</option></select>
             <select name="e book" id="option"><option value="ebooks"></option></select>
-        </section>
+        </section> -->
         
+
         <section class="main">
     <cards class="card"
         data-title="Book Title 1"
@@ -137,6 +121,24 @@
         <img src="Premade Book Covers - Premade Non-fiction, Business Book Covers -_.jpeg" alt="book1">
         <h3>Book Title 1</h3>
     </cards>
+    
+    <cards class="card"
+        data-title="Book Title 1"
+        data-author="Author Name 1"
+        data-description="This is a fantastic first book about a thrilling adventure in a faraway land. A must-read for all."
+        data-preview="../preview/book1_preview.html">
+        <img src="Book Cover Designer - David Gardias (1).jpeg" alt="book1">
+        <h3>Book Title 1</h3>
+    </cards>
+    
+    <cards class="card"
+        data-title="Book Title 1"
+        data-author="Author Name 1"
+        data-description="This is a fantastic first book about a thrilling adventure in a faraway land. A must-read for all."
+        data-preview="../preview/book1_preview.html">
+        <img src="Концептуальная иллюстрация и анимация.jpeg" alt="book1">
+        <h3>Book Title 1</h3>
+    </cards>
 
     </section>
     </section>
@@ -150,7 +152,7 @@
                 <h2 id="modalBookTitle"></h2>
                 <p><strong>Author:</strong> <span id="modalBookAuthor"></span></p>
                 <p id="modalBookDescription"></p>
-                <a id="modalPreviewButton" href="../preview/book3_preview.html" class="preview-button">Go to Book Preview</a>
+                <a id="Preview" href="../book_preview/book_preview.html" class="preview-button">Go to Book Preview</a>
             </div>
         </div>
     </div>
@@ -159,88 +161,15 @@
 <script src="main2.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<script src="main2.js"></script>
+<script src="main page.js"></script>
+
 </body>
 </html>
->>>>>>> origin/khalid-ooo
 
     <footer>
         <p>&copy; 2024 Your Book Space. All rights reserved.</p>
     </footer>
 
-<<<<<<< HEAD
-    <script src="main page.js"></script>
-    <script>
-        // Load books from PHP API
-        function loadBooks() {
-            fetch('./main_page.php')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success && data.books) {
-                        displayBooks(data.books);
-                    }
-                })
-                .catch(error => console.error('Error loading books:', error));
-        }
-
-        // Display books
-        function displayBooks(books) {
-            const booksList = document.getElementById('booksList');
-            
-            if (books.length === 0) {
-                booksList.innerHTML = '<p style="color: #999;">No books available.</p>';
-                return;
-            }
-
-            let html = '';
-            books.forEach(book => {
-                html += `
-                    <div class="card" onclick="selectBookForChapters(${book.id}, '${book.title.replace(/'/g, "\\'")}')">
-                        <img src="${book.cover_image_path || 'default-cover.jpg'}" alt="${book.title}">
-                        <h3>${book.title}</h3>
-                        <p style="font-size: 12px; color: #666;">by ${book.author}</p>
-                    </div>
-                `;
-            });
-            
-            booksList.innerHTML = html;
-        }
-
-        // Search books
-        function searchBooks() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            
-            fetch('./main_page.php')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success && data.books) {
-                        const filtered = data.books.filter(book => 
-                            book.title.toLowerCase().includes(searchTerm) ||
-                            book.author.toLowerCase().includes(searchTerm)
-                        );
-                        displayBooks(filtered);
-                    }
-                })
-                .catch(error => console.error('Error searching books:', error));
-        }
-
-        // Filter by category
-        function filterByCategory() {
-            // For now, just reload all books. You can add category filtering later
-            loadBooks();
-        }
-
-        // Select book to add chapters
-        function selectBookForChapters(bookId, bookTitle) {
-            // Redirect to admin page with book ID
-            window.location.href = `../../backend/admin.html?book_id=${bookId}`;
-        }
-
-        // Load books on page load
-        window.addEventListener('load', loadBooks);
-    </script>
 </body>
 </html>
-=======
-</body>
-</html>
->>>>>>> origin/khalid-ooo
