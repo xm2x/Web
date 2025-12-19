@@ -9,9 +9,6 @@ $conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-?>
-<?php
-include 'db_connect.php';
 
 // Get search query or category filter from the URL
 $search = isset($_GET['query']) ? $_GET['query'] : '';
@@ -46,34 +43,3 @@ $result = $conn->query($sql);
         <p>No books found.</p>
     <?php endif; ?>
 </section>
-
-
-
-
-<?php
-            // 1. Database Connection
-            $conn = new mysqli("localhost", "username", "password", "your_db_name");
-
-            // Check connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
-            // 2. Fetch the 4 most recent books
-            $sql = "SELECT title, author, image_path, description FROM books ORDER BY id DESC LIMIT 4";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
-                    echo '
-                    <div class="arrival-card">
-                        <img src="uploads/' . $row['image_path'] . '" alt="' . $row['title'] . '">
-                        <h4>' . $row['title'] . '</h4>
-                        <p>' . $row['author'] . '</p>
-                    </div>';
-                }
-            } else {
-                echo "<p>No new arrivals yet!</p>";
-            }
-            $conn->close();
-            ?>

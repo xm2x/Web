@@ -1,9 +1,32 @@
+// ====================================
+// 1. DROPDOWN MENU LOGIC
+// ====================================
+const infoImage = document.getElementById('info');
+const dropdownMenu = document.getElementById('dropdown-menu');
 
+// Function to show/hide the dropdown
+function toggleDropdown() {
+    dropdownMenu.classList.toggle('show');
+}
+
+// Add a click event listener to the image
+infoImage.addEventListener('click', toggleDropdown);
+
+// Close the dropdown if the user clicks anywhere outside of it
+window.onclick = function(event) {
+    // Check if the click event did NOT originate from the image
+    if (!event.target.matches('#info')) {
+        // Check if the menu is currently visible (has the 'show' class)
+        if (dropdownMenu.classList.contains('show')) {
+            dropdownMenu.classList.remove('show');
+        }
+    }
+}
 
 function filterCategory(category) {
     // This reloads the page with the category in the URL
     // Your PHP script (above) will then pick it up and filter the results
-    window.location.href = "main_page.php?category=" + category;
+    window.location.href = "main.php?category=" + category;
 }
 
 $(document).ready(function() {
@@ -36,14 +59,7 @@ $(document).ready(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
-});
-
-
-
-
-
-
-$(document).ready(function() {
+    
     // Get the modal element
     var modal = $("#bookModal");
     
@@ -80,20 +96,6 @@ $(document).ready(function() {
         // Check if the click target is the modal itself
         if ($(event.target).is(modal)) {
             modal.css("display", "none");
-        }
-    });
-
-    // Optional: Existing user-menu dropdown logic (from your original HTML)
-    $("#info").on("click", function() {
-        $("#dropdown-menu").toggleClass("show");
-    });
-
-    // Close the dropdown if the user clicks outside of it
-    $(window).on("click", function(event) {
-        if (!$(event.target).closest('.user-menu-wrapper').length) {
-            if ($("#dropdown-menu").hasClass('show')) {
-                $("#dropdown-menu").removeClass('show');
-            }
         }
     });
 });
