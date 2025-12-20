@@ -114,7 +114,7 @@ if (isset($_GET['delete_id'])) {
 
     <h1 style="text-align:center;">Admin: Manage Books</h1>
     <div style="text-align:center; margin-bottom: 20px;">
-        <a href="../main_page/main_page.php" style="text-decoration:none; color:#007bff;">&larr; Go Back to Website</a>
+        <a href="../main page/main_page.php" style="text-decoration:none; color:#007bff;">&larr; Go Back to Website</a>
     </div>
 
     <?php if(isset($msg)) { echo "<p class='msg'>$msg</p>"; } ?>
