@@ -1,28 +1,33 @@
-const infoImage = document.getElementById('info');
-            
-            // Get the dropdown menu element by its ID
-            const dropdownMenu = document.getElementById('dropdown-menu');
-            
-            // Function to show/hide the dropdown
-            function toggleDropdown() {
-                // Toggles the 'show' class on the dropdown menu
-                // If the class is present, display:block is applied (show)
-                // If the class is absent, display:none is applied (hide)
-                dropdownMenu.classList.toggle('show');
+document.addEventListener('DOMContentLoaded', () => {
+    // Plan card selection
+    document.querySelectorAll('.plan-card').forEach(card => {
+        card.addEventListener('click', e => {
+            if (!e.target.classList.contains('select-btn')) {
+                document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
             }
-            
-            // Add a click event listener to the image
-            infoImage.addEventListener('click', toggleDropdown);
-            
-            // Optional: Close the dropdown if the user clicks anywhere outside of it
-            window.onclick = function(event) {
-                // Check if the click event did NOT originate from the image
-                if (!event.target.matches('#info')) {
-                    // Check if the menu is currently visible (has the 'show' class)
-                    if (dropdownMenu.classList.contains('show')) {
-                        // Hide the menu
-                        dropdownMenu.classList.remove('show');
-                    }
-                }
-            }
+        });
+    });
 
+    // Select button alerts
+    document.querySelectorAll('.select-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.stopPropagation();
+            const plan = btn.closest('.plan-card').querySelector('h2').textContent;
+            alert(`You selected the ${plan}! Redirecting to checkout...`);
+        });
+    });
+
+    // Dropdown toggle
+    const info = document.getElementById('info');
+    const dropdown = document.getElementById('dropdown-menu');
+    
+    if (info && dropdown) {
+        info.onclick = e => {
+            e.stopPropagation();
+            dropdown.classList.toggle('show');
+        };
+        
+        document.onclick = () => dropdown.classList.remove('show');
+    }
+});
