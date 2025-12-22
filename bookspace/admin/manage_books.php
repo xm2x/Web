@@ -141,7 +141,7 @@ if (isset($_GET['delete_id'])) {
             <label>Category:</label>
             <select name="category">
                 <option value="All Books">All Books</option>
-                <option value="Sci-Fi">Sci-Fi</option>
+                <option value="SCIENCE FICTION">SCIENCE FICTION</option>
                 <option value="Romance">Romance</option>
                 <option value="Horror">Horror</option>
                 <option value="Thriller">Thriller</option>
