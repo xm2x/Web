@@ -82,7 +82,7 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_login'])) {
 <section class="header">
     <a href="main_page.php">All Books</a>
     <a href="main_page.php?category=best_seller">Best Seller</a>
-    <a href="main_page.php?category=science_fiction">Science Fiction</a>
+    <a href="main_page.php?category=Science Fiction">Science Fiction</a>
     <a href="main_page.php?category=fantasy">Fantasy</a>
     <a href="main_page.php?category=romance">Romance</a>
     <a href="main_page.php?category=horror">Horror</a>
@@ -90,7 +90,7 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_login'])) {
     <a href="main_page.php?category=mystery">Mystery</a>
     <a href="main_page.php?category=science">Science</a>
     <a href="main_page.php?category=biography">Biography</a>
-    <a href="main_page.php?category=self_help">Self Help</a>
+    <a href="main_page.php?category=self help">Self Help</a>
 </section>
 
     
