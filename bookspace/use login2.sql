@@ -78,11 +78,6 @@ CREATE TABLE orders (
 INSERT INTO users (full_name, email, password) 
 VALUES ('System Admin', 'admin@gmail.com', 'admin123');
 
--- 6. INSERT TEST USER
--- Essential: This provides a valid 'user_id' (1) for your PHP sessions to use.
-INSERT INTO users (id, full_name, email, password) 
-VALUES (1, 'Test User', 'test@test.com', '123');
-
 -- 7. INSERT PRODUCTS
 -- Essential: These provide valid 'product_id' values for your "Add to Cart" buttons.
 INSERT INTO products (title, author, image, price, category, description) VALUES 
