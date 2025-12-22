@@ -81,7 +81,7 @@ VALUES ('System Admin', 'admin@gmail.com', 'admin123');
 -- 6. INSERT TEST USER
 -- Essential: This provides a valid 'user_id' (1) for your PHP sessions to use.
 INSERT INTO users (id, full_name, email, password) 
-VALUES (1, 'Test User', 'test@test.com', '123');
+VALUES (0, 'Test User', 'test@test.com', '123');
 
 -- 7. INSERT PRODUCTS
 -- Essential: These provide valid 'product_id' values for your "Add to Cart" buttons.
