@@ -1,505 +1,124 @@
-# 📚 Bookstore Web Application Documentation
+# 📚 Your Book Space - Website Documentation
 
 ## Table of Contents
-1. [Project Overview](#project-overview)
-2. [Project Structure](#project-structure)
-3. [Database Schema](#database-schema)
-4. [Features](#features)
-5. [File Documentation](#file-documentation)
-6. [Setup Instructions](#setup-instructions)
-7. [API Endpoints](#api-endpoints)
-8. [Security Considerations](#security-considerations)
+1. [Introduction](#1-introduction)
+2. [Website Objective](#2-website-objective)
+3. [Used Tools and Platforms](#3-used-tools-and-platforms)
+4. [Main Pages of the Website](#4-main-pages-of-the-website)
+5. [Team Members](#5-team-members)
 
 ---
 
-## Project Overview
+## 1. Introduction
 
-**Your Book Space** is a full-stack PHP-based online bookstore application that allows users to:
-- Browse and purchase books
-- Register and login to accounts
-- Add items to a shopping cart
-- Preview books with a page-by-page viewer
-- Manage books (Admin functionality)
-
-### Technologies Used
-| Technology | Purpose |
-|------------|---------|
-| **PHP** | Server-side scripting |
-| **MySQL** | Database management |
-| **HTML5/CSS3** | Frontend structure & styling |
-| **JavaScript** | Client-side interactivity |
-| **Font Awesome** | Icons |
-| **jQuery** | DOM manipulation (About page) |
+**Your Book Space** is an online bookstore built to let readers browse, preview, and purchase books through a clean, responsive web experience. The site combines a product catalog, interactive book previews, a shopping cart, and an admin area for managing inventory.
 
 ---
 
-## Project Structure
+## 2. Website Objective
 
-```
-bookstore/
-├── cart.php                    # Shopping cart functionality
-├── login.sql                   # Database schema
-├── DOCUMENTATION.md            # This file
-│
-├── about/                      # About Us page
-│   ├── about_us.html
-│   ├── about.css
-│   └── about.js
-│
-├── admin/                      # Admin panel
-│   ├── manage_books.php        # CRUD operations for books
-│   └── edit_book.php           # Edit individual book
-│
-├── book_preview/               # Book reader/viewer
-│   ├── book_preview.php
-│   ├── book_preview.css
-│   └── book_preview.js
-│
-├── contact/                    # Contact page
-│   ├── contact.html
-│   ├── cont.css
-│   └── cont.js
-│
-├── info/                       # User profile page
-│   ├── info.html
-│   ├── info.css
-│   └── info.js
-│
-├── log-in form/                # Authentication system
-│   ├── login.php               # Login/Signup UI
-│   ├── auth.php                # Authentication logic
-│   ├── login.css
-│   └── login.js
-│
-├── main page/                  # Main storefront
-│   ├── main_page.php
-│   ├── main page.css
-│   └── main page.js
-│
-└── plans/                      # Subscription plans
-    ├── plan.html
-    ├── plan.css
-    └── plan.js
-```
+**Primary Goal:** Provide a convenient digital storefront where users can discover books, preview content, and complete purchases securely.
+
+**Key Services**
+- Book catalog browsing by category
+- Book preview (page-by-page reader)
+- User authentication and profiles
+- Shopping cart and checkout flow
+- Admin book management (CRUD)
+- Subscription plans overview
 
 ---
 
-## Database Schema
+## 3. Used Tools and Platforms
 
-### Database: `bookstore_db`
+### Programming Languages and Implementation Platform
+| Language | Implementation Platform/Usage |
+|----------|--------------------------------|
+| PHP | Server-side logic, sessions, DB queries (runs on Apache via XAMPP/WAMP) |
+| SQL | MySQL schema and data manipulation |
+| HTML5 | Page structure and forms |
+| CSS3 | Layout, styling, responsiveness |
+| JavaScript | Client interactivity (DOM events, viewer controls) |
 
-#### 1. Users Table
-```sql
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    full_name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
-);
-```
-
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | INT | Primary key, auto-increment |
-| `full_name` | VARCHAR(100) | User's full name |
-| `email` | VARCHAR(100) | Unique email address |
-| `password` | VARCHAR(255) | User password (plain text - see security notes) |
-
-#### 2. Products Table
-```sql
-CREATE TABLE products (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    image VARCHAR(255) NOT NULL,
-    price DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
-    category VARCHAR(100) DEFAULT 'General'
-);
-```
-
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | INT | Primary key, auto-increment |
-| `title` | VARCHAR(255) | Book title |
-| `image` | VARCHAR(255) | Image filename |
-| `price` | DECIMAL(10,2) | Book price in USD |
-| `category` | VARCHAR(100) | Book category |
-
-#### 3. Orders Table
-```sql
-CREATE TABLE orders (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    product_id INT NOT NULL,
-    quantity INT DEFAULT 1,
-    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
-);
-```
-
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | INT | Primary key, auto-increment |
-| `user_id` | INT | Foreign key to users table |
-| `product_id` | INT | Foreign key to products table |
-| `quantity` | INT | Number of items ordered |
-| `order_date` | TIMESTAMP | Order timestamp |
+### Supporting Libraries and Tools
+| Tool | Purpose |
+|------|---------|
+| jQuery 3.6.0 | DOM utilities (About page) |
+| Font Awesome 5.15.3 | Icons |
+| XAMPP/WAMP | Local web+DB stack (Apache, MySQL, PHP) |
+| phpMyAdmin | DB administration |
+| VS Code | Development/editor |
 
 ---
 
-## Features
+## 4. Main Pages of the Website
 
-### 🔐 Authentication System
-- **Location**: `log-in form/`
-- **Features**:
-  - User registration with email validation
-  - User login with session management
-  - Toggle between Login and Signup forms
-  - Password visibility toggle
-  - Error/Success message display
+> Screenshots: capture each page in the browser and place the image files in a `screenshots/` folder, then link them in the slots below.
 
-### 🏠 Main Page (Storefront)
-- **Location**: `main page/main_page.php`
-- **Features**:
-  - Display all products from database
-  - Add to Cart functionality
-  - User dropdown menu (logged in/out states)
-  - Auto-login via cookies
-  - Category sidebar
-  - Click on book to preview
+### 4.1 Main Page (Storefront)
+- **File:** `main page/main_page.php`
+- **Description:** Landing page listing all books from the database with cover, title, price, and Add to Cart. Includes search bar, category sidebar, and user menu.
+- **Screenshot:** _Add: `screenshots/main_page.png`_
 
-### 🛒 Shopping Cart
-- **Location**: `cart.php`
-- **Features**:
-  - Session-based cart storage
-  - Add items to cart
-  - Remove items from cart
-  - Calculate subtotals and totals
-  - Checkout (saves orders to database)
-  - Login requirement for checkout
+### 4.2 Login / Registration
+- **File:** `log-in form/login.php`
+- **Description:** Dual-view form for user login and sign-up with email/password, toggle between forms, and password visibility control.
+- **Screenshot:** _Add: `screenshots/login.png`_
 
-### 📖 Book Preview/Reader
-- **Location**: `book_preview/`
-- **Features**:
-  - Chapter-based navigation
-  - Page-by-page viewing
-  - Previous/Next page navigation
-  - Jump to specific page
-  - Fullscreen mode
-  - Night mode toggle
-  - Sidebar toggle
-  - Keyboard navigation (Arrow keys)
-  - Dynamic cover/title from URL parameters
+### 4.3 Shopping Cart
+- **File:** `cart.php`
+- **Description:** Displays items added to the cart with quantity, price, subtotal/total, remove option, and checkout (requires login).
+- **Screenshot:** _Add: `screenshots/cart.png`_
 
-### 👨‍💼 Admin Panel
-- **Location**: `admin/`
-- **Features**:
-  - **Create**: Add new books with drag-and-drop image upload
-  - **Read**: View all existing books in table
-  - **Update**: Edit book details
-  - **Delete**: Remove books with confirmation
-  - File upload to `main page/` directory
+### 4.4 Book Preview (Reader)
+- **File:** `book_preview/book_preview.php`
+- **Description:** Page-by-page reader with chapter list, next/prev, jump-to-page, fullscreen, night mode, and dynamic cover/title from URL params.
+- **Screenshot:** _Add: `screenshots/book_preview.png`_
 
-### 📝 Static Pages
-- **About Us** (`about/about_us.html`): Company story, mission, community focus
-- **Contact** (`contact/contact.html`): Contact form with company info
-- **User Profile** (`info/info.html`): Display user information
-- **Plans** (`plans/plan.html`): Subscription tiers (Basic, Premium, Premium-Plus)
+### 4.5 Admin - Manage Books
+- **File:** `admin/manage_books.php`
+- **Description:** Admin dashboard to add books (drag/drop image upload), list all books, edit, and delete entries.
+- **Screenshot:** _Add: `screenshots/admin_manage_books.png`_
+
+### 4.6 Admin - Edit Book
+- **File:** `admin/edit_book.php`
+- **Description:** Edit form for an existing book (title, image filename, price, category) with update and cancel options.
+- **Screenshot:** _Add: `screenshots/admin_edit_book.png`_
+
+### 4.7 About Us
+- **File:** `about/about_us.html`
+- **Description:** Story, mission/vision, community focus, and curation philosophy with alternating text-image sections.
+- **Screenshot:** _Add: `screenshots/about.png`_
+
+### 4.8 Contact
+- **File:** `contact/contact.html`
+- **Description:** Contact form (name, email, message) plus address, phone, email, and social links.
+- **Screenshot:** _Add: `screenshots/contact.png`_
+
+### 4.9 User Profile
+- **File:** `info/info.html`
+- **Description:** Shows user avatar, name, email, phone with Save/Edit/Subscribe actions.
+- **Screenshot:** _Add: `screenshots/profile.png`_
+
+### 4.10 Subscription Plans
+- **File:** `plans/plan.html`
+- **Description:** Pricing page with Basic, Premium, and Premium-Plus tiers and feature lists.
+- **Screenshot:** _Add: `screenshots/plans.png`_
 
 ---
 
-## File Documentation
+## 5. Team Members
 
-### Core Files
+| # | Name | Role | Responsibilities |
+|---|------|------|------------------|
+| 1 | **Team Leader Name** | Team Leader / Full-Stack Dev | Coordination, architecture, DB design, code review, integrations |
+| 2 | Member 2 | Frontend Developer | HTML/CSS, responsive layouts, UI polish |
+| 3 | Member 3 | Backend Developer | PHP logic, authentication, cart/checkout, DB queries |
+| 4 | Member 4 | Frontend Developer | JavaScript interactions, book preview features |
+| 5 | Member 5 | UI/UX Designer | Visual design, page layouts, icons/images, usability |
 
-#### `cart.php`
-**Purpose**: Shopping cart management
-
-**Session Variables**:
-- `$_SESSION['cart']` - Array of product IDs and quantities
-- `$_SESSION['user_id']` - Logged-in user ID
-
-**Operations**:
-| Action | Method | Parameter |
-|--------|--------|-----------|
-| Add to Cart | POST | `add_to_cart`, `product_id` |
-| Remove Item | GET | `remove` (product_id) |
-| Checkout | POST | `checkout` |
+**Team Leader:** Team Leader Name
 
 ---
 
-#### `log-in form/auth.php`
-**Purpose**: Handle user authentication
-
-**POST Parameters**:
-| Parameter | Values | Description |
-|-----------|--------|-------------|
-| `action` | `login`, `register` | Authentication action |
-| `email` | string | User email |
-| `password` | string | User password |
-| `full_name` | string | (Register only) User's name |
-
-**Redirects**:
-- Success Login → `../main page/main_page.php`
-- Error → `login.php?error=MESSAGE`
-- Success Register → `login.php?success=MESSAGE`
-
----
-
-#### `log-in form/login.php`
-**Purpose**: Login/Registration UI
-
-**JavaScript Functions**:
-- `showSignup()` - Display registration form
-- `showLogin()` - Display login form
-- `togglePassword(id)` - Toggle password visibility
-
----
-
-#### `main page/main_page.php`
-**Purpose**: Main storefront displaying products
-
-**Features**:
-- Auto-login from cookies
-- Dynamic product listing from database
-- Add to Cart forms for each product
-- User dropdown menu with conditional content
-
----
-
-#### `book_preview/book_preview.php`
-**Purpose**: Book reader interface
-
-**URL Parameters**:
-| Parameter | Description |
-|-----------|-------------|
-| `title` | Book title to display |
-| `img` | Book cover image path |
-
----
-
-#### `book_preview/book_preview.js`
-**Purpose**: Book reader functionality
-
-**Key Functions**:
-| Function | Description |
-|----------|-------------|
-| `loadPage(index)` | Load and display specific page |
-| `toggleDropdown()` | Show/hide user menu |
-| `makeDataSvg()` | Generate placeholder SVG pages |
-
-**Controls**:
-- Arrow keys for navigation
-- Click image to go to next page
-- Chapter links to switch chapters
-
----
-
-#### `admin/manage_books.php`
-**Purpose**: Admin CRUD operations
-
-**Operations**:
-| Operation | Method | Description |
-|-----------|--------|-------------|
-| Add Book | POST (`add_book`) | Create new product with image upload |
-| Delete Book | GET (`delete_id`) | Remove product from database |
-
-**File Upload**:
-- Accepts image files
-- Saves to `../main page/` directory
-- Stores filename in database
-
----
-
-#### `admin/edit_book.php`
-**Purpose**: Edit existing book
-
-**URL Parameters**:
-| Parameter | Description |
-|-----------|-------------|
-| `id` | Product ID to edit |
-
-**POST Parameters**: `title`, `image`, `price`, `category`
-
----
-
-### CSS Files
-
-| File | Description |
-|------|-------------|
-| `main page.css` | Main page styling, cards, navigation |
-| `login.css` | Login form styling, input boxes |
-| `book_preview.css` | Reader layout, controls, sidebar |
-| `about.css` | About page sections, alternating layouts |
-| `cont.css` | Contact form styling |
-| `info.css` | User profile styling |
-| `plan.css` | Subscription cards styling |
-
-### JavaScript Files
-
-| File | Description |
-|------|-------------|
-| `main page.js` | User dropdown functionality |
-| `login.js` | Form toggle, password visibility |
-| `book_preview.js` | Page navigation, chapter switching |
-| `about.js` | About page interactions |
-| `cont.js` | Contact page interactions |
-| `info.js` | Profile page interactions |
-| `plan.js` | Plans page interactions |
-
----
-
-## Setup Instructions
-
-### Prerequisites
-- XAMPP, WAMP, or similar PHP/MySQL environment
-- PHP 7.0+
-- MySQL 5.7+
-
-### Installation Steps
-
-1. **Start your local server** (Apache + MySQL)
-
-2. **Create the database**:
-   ```sql
-   -- Run the contents of login.sql in phpMyAdmin
-   -- or MySQL command line
-   ```
-
-3. **Configure database connection** (already set in files):
-   ```php
-   $servername = "localhost";
-   $username = "root";
-   $password = "";
-   $dbname = "bookstore_db";
-   ```
-
-4. **Place files in web directory**:
-   - For XAMPP: `C:\xampp\htdocs\bookstore\`
-   - For WAMP: `C:\wamp\www\bookstore\`
-
-5. **Add book images** to `main page/` folder
-
-6. **Access the application**:
-   - Main Page: `http://localhost/bookstore/main page/main_page.php`
-   - Admin: `http://localhost/bookstore/admin/manage_books.php`
-   - Login: `http://localhost/bookstore/log-in form/login.php`
-
-### Test Credentials
-```
-Email: test@test.com
-Password: 123
-```
-
----
-
-## API Endpoints
-
-This application uses traditional PHP form submissions rather than REST APIs:
-
-| Page | Method | Action |
-|------|--------|--------|
-| `auth.php` | POST | Login/Register |
-| `cart.php` | POST | Add to cart |
-| `cart.php` | GET | Remove from cart |
-| `cart.php` | POST | Checkout |
-| `manage_books.php` | POST | Add book |
-| `manage_books.php` | GET | Delete book |
-| `edit_book.php` | POST | Update book |
-
----
-
-## Security Considerations
-
-### ⚠️ Current Vulnerabilities (For Educational Purposes)
-
-1. **SQL Injection**: Direct string interpolation in SQL queries
-   ```php
-   // Vulnerable
-   $sql = "SELECT * FROM users WHERE email='$email'";
-   
-   // Recommended: Use prepared statements
-   $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
-   $stmt->bind_param("s", $email);
-   ```
-
-2. **Plain Text Passwords**: Passwords stored without encryption
-   ```php
-   // Recommended: Use password_hash()
-   $hashed = password_hash($password, PASSWORD_DEFAULT);
-   
-   // And password_verify() for login
-   if (password_verify($input_password, $stored_hash)) { ... }
-   ```
-
-3. **XSS Vulnerability**: Some user inputs not sanitized
-   ```php
-   // Use htmlspecialchars() for all outputs
-   echo htmlspecialchars($user_input, ENT_QUOTES, 'UTF-8');
-   ```
-
-4. **No CSRF Protection**: Forms lack CSRF tokens
-
-5. **File Upload Security**: Should validate file types server-side
-
-### Recommended Improvements
-- [ ] Implement prepared statements for all SQL queries
-- [ ] Hash passwords with `password_hash()`
-- [ ] Add CSRF tokens to all forms
-- [ ] Validate and sanitize all user inputs
-- [ ] Implement proper session security
-- [ ] Add file type validation for uploads
-- [ ] Use HTTPS in production
-
----
-
-## Navigation Flow
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        Main Page                            │
-│                    (main_page.php)                          │
-│                                                             │
-│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐        │
-│  │ Login   │  │ Profile │  │  Cart   │  │  Admin  │        │
-│  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘        │
-│       │            │            │            │              │
-│       ▼            ▼            ▼            ▼              │
-│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐        │
-│  │login.php│  │info.html│  │cart.php │  │manage_  │        │
-│  │         │  │         │  │         │  │books.php│        │
-│  └─────────┘  └─────────┘  └─────────┘  └─────────┘        │
-│                                                             │
-│  ┌──────────────────────────────────────────────────┐      │
-│  │              Book Cards (Click to Preview)        │      │
-│  │                        │                          │      │
-│  │                        ▼                          │      │
-│  │              book_preview.php                     │      │
-│  └──────────────────────────────────────────────────┘      │
-│                                                             │
-│  ┌─────────┐  ┌─────────┐  ┌─────────┐                     │
-│  │ About   │  │ Contact │  │  Plans  │                     │
-│  └─────────┘  └─────────┘  └─────────┘                     │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Changelog
-
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0.0 | 2024 | Initial release |
-
----
-
-## Support
-
-For issues or questions, contact:
-- **Address**: 123 Book St, Readville, BK 45678
-- **Phone**: (123) 456-7890
-- **Email**: support@yourbookspace.com
-
----
-
-*Documentation generated for Your Book Space - Bookstore Application*
+*Last updated: December 2025*
